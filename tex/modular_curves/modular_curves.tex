@@ -48,6 +48,7 @@
 \newcommand{\F}{\field{F}} % finite fields
 \newcommand{\T}{\field{T}} % hecke algebra
 \newcommand{\A}{\field{A}}
+\renewcommand{\SS}{\field{S}}
 \newcommand{\I}{\field{I}}
 \newcommand{\G}{\field{G}}
 \newcommand{\HH}{\field{H}}
@@ -174,7 +175,7 @@ These are lecture notes for a course on modular curves given in Zagreb. The lang
 \end{abstract}
 
 \maketitle
-
+\tableofcontents
 
 \section{Background}
 
@@ -223,6 +224,12 @@ The set of all group variety homomorphisms over $K$ is denoted by $\HomGrpVar(G_
 \end{definition}
 Notice the absence of a compatibility condition for the inverse map, the reason for this omission is that inverse of an element is unique. And hence the compatibility $\phi(\iota(a))=\iota(\phi(a))$ follows from the group variety and group variety homomorphism axioms.
 
+\begin{lemma}\label{lem:group-homomorphism-from-group-variety-homomorphism}
+	Let $\phi: G_1 \to G_2$ be a group variety homomorphism over a field $K$ and $L\subset \overline K$ be a subfield containing $K$. Then $\phi$ induces a group homomorphism  $G_1(L) \to G_2(L)$.
+\end{lemma}
+\begin{proof}
+	This follows immediately from the definition.
+\end{proof}
 
 \begin{exercise}
 Let $K$ be a field of characteristic $0$. Show that $\HomGrpVar(\A^1_K, \A^1_K)$ consists of the linear polynomials $ax \in K[x]$ (hint: $\Hom(\A^1_K, \A^1_K) \cong K[x]$). 
@@ -230,13 +237,53 @@ Let $K$ be a field of characteristic $0$. Show that $\HomGrpVar(\A^1_K, \A^1_K)$
 
 \subsection{Elliptic curves}
 
-\section{Modular curves and the upper half plane}
+\section{Modular curves $\C\setminus \R$ and the upper half plane}
+
+\subsection{M\"obius transformations}
+
+
+\begin{definition}[M\"obius transformation]
+Let $a,b,c,d \in \R$ with $ad-bc \neq 0$. A \textit{M\"obius transformation} is a transformation is an automorphism of $\C\setminus \R$ of the form
+$$ \tau \mapsto \frac {a\tau+b} {c\tau +d}.$$
+
+The M\"obius transformation induce a group action of $\GL_2(\R)$ on $\C\setminus \R$ as follows:
+
+\begin{align*}
+\rho :  \GL_2(\R) \times \C\setminus \R &\to \C\setminus \R \\
+\left(\begin{bmatrix}
+a & b \\ 
+c & d
+\end{bmatrix}  ,\tau\right) &\mapsto  \frac {a\tau+b} {c\tau +d}.
+\end{align*}
+\end{definition}
+
 
 
 \section{A hint towards Shimura varieties}
 
 \subsection{The circle group}
 
+\begin{definition}
+	The \textit{circle group} is the group variety $\SS \subseteq \A^3_\R$ over $\R$ given by the equation $(a^2+b^2)t-1$. The identity element is given $(a,b,t)=(1,0,1)$ and the multiplication and inverse maps are given by
+	\begin{align*}
+	 s : \SS \times \SS \to& \SS \\
+	   (a,b,t)(a',b',t') \mapsto& (aa'-bb',ab'+ba', tt) \\
+	 \iota : \SS \to & \SS\\
+	           (a,b,t) \mapsto& (at,-bt,a^2+b^2)
+	\end{align*} 
+\end{definition}
+
+\begin{exercise}
+	Show that the circle group satisfies the axioms of a group variety.
+\end{exercise}
+\begin{exercise}
+Let $\phi$ be defined by 
+\begin{align*}
+  \phi:\C^* \to& \SS(\R) \\
+         (a+bi) \mapsto& (a,b,(a^2+b^2)^{-1}).
+\end{align*}
+Show that $\phi$ is a group homomorphism.
+\end{exercise}
 
 
 \bibliographystyle{alpha}
