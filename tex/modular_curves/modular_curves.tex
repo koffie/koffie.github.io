@@ -1,0 +1,245 @@
+\NeedsTeXFormat{LaTeX2e}
+\documentclass[a4paper,12pt,reqno]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{makecell}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{todonotes}
+\usepackage{comment}
+\usepackage{mathrsfs}
+\usepackage{enumitem}
+\usepackage[all,cmtip]{xy}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\setlength\marginparwidth{2cm}
+
+\usepackage[british]{babel}
+\usepackage[margin=1.2in]{geometry}
+\setlength{\belowcaptionskip}{-0.3em}
+
+\usepackage{eqparbox}
+\newcommand{\eqmathbox}[2][M]{\eqmakebox[#1]{$\displaystyle#2$}}
+\usepackage{pbox}
+
+\newcommand{\RR}{\mathcal{L}} %Riemann-Roch space
+%\renewcommand{\S}{S}
+\newcommand{\matrixtwo}[4]{\left[ \begin{array}{rr} #1 & #2 \\ #3 & #4 \end{array} \right]}
+\renewcommand{\O}{\mathcal{O}} % the symbol used with sheaves
+\newcommand{\completion}[1]{\widehat{#1}}
+\newcommand{\nequiv}{\not\equiv}
+\newcommand{\set}[1]{\left\lbrace #1 \right\rbrace}
+\newcommand{\multiset}[1]{\llbrace #1 \rrbrace}
+\newcommand{\llbrace}{\lbrace \!\!\!\: \lbrace}
+\newcommand{\rrbrace}{\rbrace \!\!\!\: \rbrace}
+\newcommand{\diamondop}[1]{\langle #1 \rangle}
+\newcommand{\field}[1]{\mathbb{#1}}  % the font for a mathematical field is blackboard
+\newcommand{\Q}{\field{Q}} % the field of the rationals
+\newcommand{\R}{\field{R}} % the field of the reals
+\newcommand{\N}{\field{N}} % the semi-ring of the natural numbers
+\newcommand{\C}{\field{C}} % the field of complex number
+\newcommand{\Z}{\field{Z}} % the ring of integers
+\newcommand{\F}{\field{F}} % finite fields
+\newcommand{\T}{\field{T}} % hecke algebra
+\newcommand{\A}{\field{A}}
+\newcommand{\I}{\field{I}}
+\newcommand{\G}{\field{G}}
+\newcommand{\HH}{\field{H}}
+\newcommand{\Qbar}{\overline{\Q}}
+\newcommand{\Fbar}{\overline{\F}}
+\renewcommand{\P}{\field{P}}
+\newcommand{\PP}{\field{P}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\K}{\mathcal{K}}
+\renewcommand{\L}{\mathcal{L}}
+%\newcommand{\X}{\mathcal{X}}
+%\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\FF}{\mathcal{F}}
+\renewcommand{\H}{\field{H}} % complex upper half plane
+\newcommand{\neron}[1]{\tilde{#1}}
+\newcommand{\Oold}{\O}
+\newcommand{\todoi}{\todo[inline]}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+\newcommand{\Nm}{\textup{Nm}}
+\newcommand{\Tr}{\textup{Tr}}
+\newcommand{\fp}{\mathfrak{p}}
+\newcommand{\fm}{\mathfrak{m}}
+\newcommand{\fP}{\mathfrak{P}}
+\newcommand{\fq}{\mathfrak{q}}
+\newcommand{\fQ}{\mathfrak{Q}}
+\newcommand{\legendre}[2]{\left(\frac{#1}{#2}\right)}
+\newcommand{\lcm}{\textup{lcm}}
+\newcommand{\Gen}{\textup{\textsf{Gen}}}
+\newcommand{\Aux}{\textup{\textsf{Aux}}}
+\newcommand{\AuxGen}{\textup{\textsf{AuxGen}}}
+\newcommand{\TypeTwoNotMomoseBound}{\textup{\textsf{TypeTwoNotMomoseBound}}}
+\newcommand{\TypeThreeNotMomoseBound}{\textup{\textsf{TypeThreeNotMomoseBound}}}
+\newcommand{\E}{\mathcal{E}} % the symbol for neron model of elliptic curve E
+\newcommand{\HomGrpVar}{\text{Hom}_{\bf grp\text{-}var}}
+
+\newcommand{\barinder}[1]{{\color{orange} ($\clubsuit$ Barinder: #1)}}
+\newcommand{\maarten}[1]{{\color{blue} ($\spadesuit$ Maarten: #1)}}
+
+%mathoperators
+\DeclareMathOperator{\Contr}{Contr}
+\DeclareMathOperator{\Char}{char}
+\DeclareMathOperator{\ann}{Ann}
+\DeclareMathOperator{\trace}{Tr}
+\DeclareMathOperator{\mdeg}{mdeg}
+\DeclareMathOperator{\cuspsum}{cuspsum}
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\id}{Id}
+\DeclareMathOperator{\Isom}{Isom}
+\DeclareMathOperator{\Orbit}{Orbit}
+\DeclareMathOperator{\map}{Map}
+\DeclareMathOperator{\primes}{Primes}
+\DeclareMathOperator{\Frob}{Frob}
+\DeclareMathOperator{\frob}{Frob}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\PSL}{PSL}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Cl}{Cl}
+\DeclareMathOperator{\CaCl}{CaCl}
+\DeclareMathOperator{\Frac}{Frac}
+\DeclareMathOperator{\Pic}{Pic}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\proj}{Proj}
+\DeclareMathOperator{\supp}{Supp}
+\DeclareMathOperator{\gon}{gon}
+\DeclareMathOperator{\aut}{Aut}
+\DeclareMathOperator{\Prin}{prin}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\num}{Num}
+\DeclareMathOperator{\Cot}{Cot}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\Supp}{\textup{\textsf{Supp}}}
+\DeclareMathOperator{\HCF}{\textup{\textsf{HCF}}}
+\DeclareMathOperator{\IsogPrimeDeg}{\textup{\textsf{IsogPrimeDeg}}}
+\DeclareMathOperator{\BadFormalImmersion}{\textup{\textsf{BadFormalImmersion}}}
+\DeclareMathOperator{\AGFI}{\textup{\textsf{AGFI}}}
+
+\newcommand{\Cusp}{\Div^{c}}
+\newcommand{\Cuspo}{\Div^{0,c}}
+\newcommand{\Divo}{\Div^{0}}
+\newcommand{\PrinCusp}{\Prin^{c}}
+\newcommand{\eps}{\varepsilon} % lazy is good
+\newcommand{\PreTypeOneTwoPrimes}{\textup{\textsf{PreTypeOneTwoPrimes}}}
+\newcommand{\TypeTwoPrimes}{\textup{\textsf{TypeTwoPrimes}}}
+\newcommand{\TypeOnePrimes}{\textup{\textsf{TypeOnePrimes}}}
+\newcommand{\GenericBound}{\textup{\textsf{GenericBound}}}
+\newcommand{\MMIB}{\textup{\textsf{MMIB}}}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}[lemma]{Theorem}
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem*{claim}{Claim}
+
+\theoremstyle{definition}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{example}[lemma]{Example}
+\newtheorem{exercise}[lemma]{Exercise}
+\newtheorem{notation}[lemma]{Notation}
+\newtheorem{question}[lemma]{Question}
+\newtheorem{remark}[lemma]{Remark}
+\newtheorem*{condCC}{Condition CC}
+\newtheorem*{ack}{Acknowledgements}
+\newtheorem{case}{Case}
+
+\numberwithin{lemma}{section}
+\numberwithin{equation}{section} 
+\numberwithin{figure}{section}
+\title{Large degree primitive points on curves}
+\author{Maarten Derickx}
+%\date{August 2023}
+
+\begin{document}
+
+
+
+\begin{abstract}
+These are lecture notes for a course on modular curves given in Zagreb. The language of schemes is avoided as much as possible in order to keep the notes accessible.
+\end{abstract}
+
+\maketitle
+
+
+\section{Background}
+
+\subsection{Group varieties}
+\begin{definition}\label{def:group-variety}
+Let $K$ be a field, a \textit{group variety} over $K$ is a variety $G$ over $K$ together with 
+\begin{itemize}
+	\item a point $e \in G(K)$ called the identity element,
+	\item a morphism $\iota: G \to G$ defined over $K$ called the inverse map,
+	\item a morphism $s: G \times G \to G$ defined over $K$, called the addition map
+\end{itemize}
+such that the usual group axioms hold for $e, \iota, s$ for all elements in $G(\overline K)$. To be precise for all $a,b,c \in G(\overline K)$ one has
+\begin{itemize}
+	\item $s(a,e)=a = s(e,a)$ ($e$ is an identity element),
+	\item $s(s(a,b),c)) = s(a,s(b,c))$ ($s$ is associative),
+	\item $s(\iota(a),a) = e = s(a, \iota(a))$ ($\iota$ is an inverse).
+\end{itemize}
+If furthermore $s$ is symmetric, i.e. $s(a,b)=s(b,a)$, then $G$ is called an \textit{abelian} group variety.
+\end{definition}
+
+\begin{lemma}\label{lem:group-structure-on-group-variety}
+	Let $G$ be a group variety over a field $K$ and $L\subset \overline K$ be a subfield containing $K$. Then $G(L)$ with the operations$e,\iota, s$ is a group.
+\end{lemma}
+\begin{proof}
+	This follows immediately from the definition.
+\end{proof}
+
+\begin{example}
+Let $K$ be a field and $n$ an integer. Then $\A^n$ can be given the structure of a group variety over $K$ by defining $e:=(0,0,\ldots,0) \in \A^n(K)$, 
+\begin{align}
+s \colon  \A^n \times \A^n \to& \A^n \\
+((a_1,a_2,\ldots, a_n),(b_1,b_2,\ldots, b_n)) \mapsto& (a_1+b_1,a_2+b_2,\ldots, a_n+a_n) \text{ and} \\
+\iota \colon  \A^n  \to& \A^n \\
+(a_1,a_2,\ldots, a_n), \mapsto& (-a_1,-a_2,\ldots, -a_n).
+\end{align}
+Notice that the usual bijection $\A^n(K) \cong K^n$ is actually a group isomorphism where the left hand side has the group law coming from the group variety structure and the right hand right hand side has is just coordinate wise addition in $K$.
+\end{example}
+
+\begin{definition}\label{def:group-variety-homomorphism}
+Let $(G_1,e_1,\iota_1,s_1), (G_2,e_2,\iota_2,s_2)$ be group varieties over  a field $K$. Then a \textit{group variety homomorphism over $K$} is morphism $\phi: G_1 \to G_2$ of varieties defined over $K$ such that
+\begin{itemize}
+	\item $\phi(e_1)=e_2$
+	\item for all $a,b \in G_1(\overline K)$ the relation $\phi(s_1(a,b)) = s_2(\phi(a),\phi(b))$ holds.
+\end{itemize}
+The set of all group variety homomorphisms over $K$ is denoted by $\HomGrpVar(G_1,G_2)$.
+\end{definition}
+Notice the absence of a compatibility condition for the inverse map, the reason for this omission is that inverse of an element is unique. And hence the compatibility $\phi(\iota(a))=\iota(\phi(a))$ follows from the group variety and group variety homomorphism axioms.
+
+
+\begin{exercise}
+Let $K$ be a field of characteristic $0$. Show that $\HomGrpVar(\A^1_K, \A^1_K)$ consists of the linear polynomials $ax \in K[x]$ (hint: $\Hom(\A^1_K, \A^1_K) \cong K[x]$). 
+\end{exercise}
+
+\subsection{Elliptic curves}
+
+\section{Modular curves and the upper half plane}
+
+
+\section{A hint towards Shimura varieties}
+
+\subsection{The circle group}
+
+
+
+\bibliographystyle{alpha}
+\bibliography{references.bib}{}
+
+\end{document}
