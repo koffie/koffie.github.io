@@ -85,11 +85,12 @@
 \newcommand{\TypeThreeNotMomoseBound}{\textup{\textsf{TypeThreeNotMomoseBound}}}
 \newcommand{\E}{\mathcal{E}} % the symbol for neron model of elliptic curve E
 \newcommand{\HomGrpVar}{\text{Hom}_{\bf grp\text{-}var}}
-
+\newcommand{\stab}[2]{\text{stab}_{#1}(#2)}
 \newcommand{\barinder}[1]{{\color{orange} ($\clubsuit$ Barinder: #1)}}
 \newcommand{\maarten}[1]{{\color{blue} ($\spadesuit$ Maarten: #1)}}
 
 %mathoperators
+
 \DeclareMathOperator{\Contr}{Contr}
 \DeclareMathOperator{\Char}{char}
 \DeclareMathOperator{\ann}{Ann}
@@ -237,12 +238,94 @@ Let $K$ be a field of characteristic $0$. Show that $\HomGrpVar(\A^1_K, \A^1_K)$
 
 \subsection{Elliptic curves}
 
+\subsection{Some group theory}
+
+\begin{definition}Let $G$ be a group and let $s: G \times G \to G$ be associated group law on $G$. Then $G^{op}$ is defined to be the group whose underlying set and identity element are the same as that of $G$ but whose group law is given by \begin{align*}
+	m^{op}: G \times G \to& G \\
+	  g,h \mapsto& m(h,g)
+	\end{align*}
+\end{definition}
+
+\begin{definition}\label{def:group_action}
+	Let $G$ be a group with identity element $e$ and $S$ be a set. Then a \textit{left group action} of $G$ on $S$ is a map $\rho: G \times S \to S$  such that for all $g,h \in G$ and $s \in S$:
+	\begin{itemize}
+		\item $\rho(e, s) = s$
+		\item $\rho(g,\rho(h,s))=\rho(gh,s)$
+	\end{itemize}
+Similarly a \textit{right group action} of $G$ on $S$ is a map $\rho: S \times G \to S$  such that for all $g,h \in G$ and $s \in S$:
+\begin{itemize}
+	\item $\rho(s,e) = s$
+	\item $\rho(\rho(s,h),g)=\rho(s,hg)$
+\end{itemize}
+\end{definition}
+
+\begin{lemma}\label{lem:left-group-action-is-group-hom}
+Let $G$ be a group and $S$ be a set and let $\rho : G \times S \to S$ be an arbitrary map. Then the following are equivalent:
+\begin{itemize}
+	\item $\rho$ is a left action of $G$ on $S$
+	\item The image of the map\begin{align*}
+	f_\rho : G \to& \Hom(S,S)\\
+	g \mapsto& (s\mapsto \rho(g,s))
+	\end{align*} is contained in $\Aut(S) \subset \Hom(S,S)$ and the induced map $f_\rho : G \to \Aut(S)$ is a group homomorphism.
+\end{itemize}
+\end{lemma}
+\begin{proof}
+Note that if $\rho$ is a group action then $f_\rho(g^{-1})$ is the inverse of $f_\rho(g)$, which shows that $f_\rho(g) \in \Aut(S)$. The rest of the proof is a relatively straightforward rewriting of the definitions of group action and group homomorphisms.	%todo spell out
+\end{proof}
+
+
+The above lemma looks slightly different for right group actions.
+\begin{lemma}\label{lem:right-group-action-is-oppositie-group-hom}
+	Let $G$ be a group and $S$ be a set and let $\rho : S \times G \to S$ be an arbitrary map. Then the following are equivalent:
+	\begin{itemize}
+		\item $\rho$ is a right action of $G$ on $S$
+		\item The image of the map\begin{align*}
+		f_\rho : G^{op} \to& \Hom(S,S)\\
+		g \mapsto& (s\mapsto \rho(s,g))
+		\end{align*} is contained in $\Aut(S) \subset \Hom(S,S)$ and the induced map $f_\rho : G^{op} \to \Aut(S)$ is a group homomorphism.
+	\end{itemize}
+\end{lemma}
+\begin{proof}
+	Similar to that of \cref{lem:left-group-action-is-group-hom}.
+\end{proof}
+
+\begin{definition}\label{def:stabilizer}
+Let $\rho G \times S \to S$ be a left action of the group $G$ on the set $S$ and let $s \in S$. Then the stabalizer of $s$ in  $G$ is defined as \begin{align*}
+\stab{G}{s} := \set{ g \in G \mid \rho(g,s)=s}
+\end{align*}
+\end{definition}
+\begin{lemma}
+Let $\rho: G \times S \to S$ be a left action of the group $G$ on the set $S$ and let $s \in S$, then $\stab{G}{s}$ is a subgroup of $G$.
+\end{lemma}
+\begin{proof}
+If $\rho(g,s)=s$ and $\rho(h,s)=s$ then $\rho(gh,s)=\rho(g,\rho(h,s))=s$.
+\end{proof}
+
+\begin{lemma}
+	Let $G$ be a group, and let $S_1$ and $S_2$ be sets with a left $G$ action. Let $C \subset S_2$ be a set of representatives of $G\backslash S_2$.
+	Then the map \begin{align*}
+	\phi : \coprod_{s_2 \in C} \stab{G}{s_2}\backslash S_1 \to& G \backslash(S_1 \times S_2)\\
+	 \stab{G}{s_2}s_1\mapsto& G(s_1,s_2)
+	\end{align*}
+	is well defined and bijective.
+\end{lemma}
+\begin{proof}
+For well it being well defined we need to show that it doesn't depend on the representative $s_1$ that was chosen for the orbit $\stab{G}{s_2}s_1$. Now suppose $gs_1 \in \stab{G}{s_2}s_1$ with $g \in \stab{G}{s_2}$ is another element in the same orbit then \begin{align*}\phi(\stab{G}{s_2}gs_1) = G(gs_1,s_2)=Gg(s_1,g^{-1}s_2)=G(s_1,s_2)=\phi(\stab{G}{s_2}s_1). \end{align*}
+
+To show it is surjective, let $G(s_1,s_2) \in G\backslash(S_1 \times S_2)$ be an arbitrary. Since $C$ is a set of representatives of $G\backslash S_2$ we can find a $s_2' \in C$ and $g \in G$ such that $s_2=gs_2'$. Now surjetivity follows since $$G(s_1,s_2)=G(s_1,gs_2')=Gg(g^{-1}s_1,s_2') =  \phi(\stab{G}{s_2'}g^{-1}s_1).$$
+
+For injectivity let $s_1, s_1' \in S$ and $s_2, s_2' \in C$. If  $\stab{G}{s_2}s_1$ and $\stab{G}{s'_2}s'_1$ map to the same element in $G\backslash(S_1 \times S_2)$ then $s_2$ and $s'_2$ must by in the same $G$ orbit. However since $C$ consists of representatives of $G \backslash S_2$ this forces $s_2 = s_2'$. Since we have $s_2=s_2'$ the equality $G(s_1,s_2) = G(s_1',s_2')$ is equivalent to $s'_1=gs_1$ for some $g \in \stab{G}{s_2}$ showing that $\stab{G}{s_2}s_1=\stab{G}{s'_2}s'_1$.
+\end{proof}
+
+\subsection{Adeles}
+
+
 \section{Modular curves $\C\setminus \R$ and the upper half plane}
 
 \subsection{M\"obius transformations}
 
 
-\begin{definition}[M\"obius transformation]
+\begin{definition}[M\"obius transformation]\label{def:mobius-transformation}
 Let $a,b,c,d \in \R$ with $ad-bc \neq 0$. A \textit{M\"obius transformation} is a transformation is an automorphism of $\C\setminus \R$ of the form
 $$ \tau \mapsto \frac {a\tau+b} {c\tau +d}.$$
 
