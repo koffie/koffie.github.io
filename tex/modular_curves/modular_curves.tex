@@ -78,13 +78,13 @@
 \newcommand{\fQ}{\mathfrak{Q}}
 \newcommand{\legendre}[2]{\left(\frac{#1}{#2}\right)}
 \newcommand{\lcm}{\textup{lcm}}
-\newcommand{\Gen}{\textup{\textsf{Gen}}}
-\newcommand{\Aux}{\textup{\textsf{Aux}}}
-\newcommand{\AuxGen}{\textup{\textsf{AuxGen}}}
-\newcommand{\TypeTwoNotMomoseBound}{\textup{\textsf{TypeTwoNotMomoseBound}}}
-\newcommand{\TypeThreeNotMomoseBound}{\textup{\textsf{TypeThreeNotMomoseBound}}}
 \newcommand{\E}{\mathcal{E}} % the symbol for neron model of elliptic curve E
-\newcommand{\HomGrpVar}{\text{Hom}_{\bf grp\text{-}var}}
+
+\newcommand{\HomGrpVar}{\mathrm{Hom}_{\bf grp\text{-}var}}
+\newcommand{\IsoKVec}[1]{\mathrm{Iso}_{#1 {\bf\text{-}vec}}}
+\newcommand{\transpose}{t}
+
+
 \newcommand{\stab}[2]{\text{stab}_{#1}(#2)}
 \newcommand{\barinder}[1]{{\color{orange} ($\clubsuit$ Barinder: #1)}}
 \newcommand{\maarten}[1]{{\color{blue} ($\spadesuit$ Maarten: #1)}}
@@ -179,6 +179,14 @@ These are lecture notes for a course on modular curves given in Zagreb. The lang
 \tableofcontents
 
 \section{Background}
+
+\subsection{Notations}
+
+\begin{itemize}
+	\item If $K$ is a field and $V_1,V_2$ are vector spaces over $K$ then $\IsoKVec{K}(V_1,V_2)$ denotes the set of isomorphisms between $V_1$ and $V_2$ as $K$ vector spaces.
+	\item If $R$ is a ring and $n >0 $ an integer then $M_n(R)$ denotes the set of $n$ by $n$ matrices.
+	\item If $A \in M_n(R)$ is a matrix then $A^\transpose$ denotes it's transpose. 
+\end{itemize}
 
 \subsection{Group varieties}
 \begin{definition}\label{def:group-variety}
@@ -329,18 +337,48 @@ For injectivity let $s_1, s_1' \in S$ and $s_2, s_2' \in C$. If  $\stab{G}{s_2}s
 Let $a,b,c,d \in \R$ with $ad-bc \neq 0$. A \textit{M\"obius transformation} is a transformation is an automorphism of $\C\setminus \R$ of the form
 $$ \tau \mapsto \frac {a\tau+b} {c\tau +d}.$$
 
-The M\"obius transformation induce a group action of $\GL_2(\R)$ on $\C\setminus \R$ as follows:
+The M\"obius transformation induce a left group action of $\GL_2(\R)$ on $\C\setminus \R$ as follows:
 
-\begin{align*}
+\begin{align}
 \rho :  \GL_2(\R) \times \C\setminus \R &\to \C\setminus \R \\
 \left(\begin{bmatrix}
 a & b \\ 
 c & d
 \end{bmatrix}  ,\tau\right) &\mapsto  \frac {a\tau+b} {c\tau +d}.
-\end{align*}
+\end{align}
 \end{definition}
 
 
+Similar to the M\"obius transformation we can also define  $\GL_2(\R)$ a left action on $\IsoKVec{\R}(\R^2,\C)$, the set of $\R$ vectors space isomorphisms between $\R^2$ and $\C$.
+\begin{align}
+\rho :  \GL_2(\R) \times \IsoKVec{\R}(\R^2,\C) &\to \IsoKVec{\R}(\R^2,\C) \\
+\left( \gamma  , f \right) &\mapsto  f \circ \gamma^\transpose.
+\end{align}
+
+The transpose is there to make it a left action.  Indeed, if $\gamma_1,\gamma_2 \in \GL_2(\R)$ and $f \in  \IsoKVec{\R}(\R^2,\C)$ then $$\rho(\gamma_1,\rho(\gamma_2,f))=f \circ \gamma_2^\transpose \circ \gamma_1^\transpose = f \circ (\gamma_1 \gamma_2)^\transpose = \rho(\gamma_1\gamma_2,f).$$ Without the transpose this would have been a right action. 
+
+\begin{lemma}
+The map 
+\begin{align}T  :\IsoKVec{\R}(\R^2,\C) &\to \C \setminus \R\\
+                             f &\mapsto \frac {f(1,0)}{f(0,1)}
+\end{align}
+if compatible with the $\GL_2(\R)$ left action and induces a bijection $\IsoKVec{\R}(\R^2,\C)/\C^* \to \C \setminus \R$.
+\end{lemma}
+
+\begin{proof}
+First for the compatibility of the $\GL_2(\R)$ action. Let $\gamma := \left [\begin{smallmatrix}
+a & b \\ 
+c & d
+\end{smallmatrix}\right] \in \GL_2(\R)$ and write $\tau_1$ for $f(1,0)$ and $\tau_2$ for $f(0,1)$. Then
+\begin{align*}
+\frac {(f \circ \gamma^\transpose) (1,0)} {(f \circ \gamma^\transpose) (0,1)} &= \frac {(f \circ \gamma^\transpose) (1,0)} {(f \circ \gamma^\transpose) (0,1)}  =\frac {f(a,b)} {f(c,d)}  = \frac{a\tau_1+b\tau_2}{c\tau_1 + d\tau_2} =  \frac{a\tau_1/\tau_2+b}{c\tau_1/\tau_2 + d} = \gamma\left(\frac {f (1,0)} {f (0,1)}\right).
+\end{align*}
+Now for the bijection $\IsoKVec{\R}(\R^2,\C)/\C^* \to \C \setminus \R$. First note that if $\lambda \in \C*$ then $T(\lambda f) = T(f)$ so that $T$ factors through a map $T' : \IsoKVec{\R}(\R^2,\C)/\C^*  \to \C \setminus \R$. One can show that $T'$ is bijective by proving that 
+\begin{align*}\C \setminus \R &\to \IsoKVec{\R}(\R^2,\C) & \\
+\tau &\mapsto ((a,b) \mapsto a\tau +b)
+\end{align*}
+is an inverse of $T'$.
+\end{proof}
 
 \section{A hint towards Shimura varieties}
 
