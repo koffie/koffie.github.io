@@ -205,7 +205,7 @@ such that the usual group axioms hold for $e, \iota, s$ for all elements in $G(\
 If furthermore $s$ is symmetric, i.e. $s(a,b)=s(b,a)$, then $G$ is called an \textit{abelian} group variety.
 \end{definition}
 
-\begin{lemma}\label{lem:group-structure-on-group-variety}
+\begin{lemma}\label{stmt:group-structure-on-group-variety}
 	Let $G$ be a group variety over a field $K$ and $L\subset \overline K$ be a subfield containing $K$. Then $G(L)$ with the operations$e,\iota, s$ is a group.
 \end{lemma}
 \begin{proof}
@@ -233,7 +233,7 @@ The set of all group variety homomorphisms over $K$ is denoted by $\HomGrpVar(G_
 \end{definition}
 Notice the absence of a compatibility condition for the inverse map, the reason for this omission is that inverse of an element is unique. And hence the compatibility $\phi(\iota(a))=\iota(\phi(a))$ follows from the group variety and group variety homomorphism axioms.
 
-\begin{lemma}\label{lem:group-homomorphism-from-group-variety-homomorphism}
+\begin{lemma}\label{stmt:group-homomorphism-from-group-variety-homomorphism}
 	Let $\phi: G_1 \to G_2$ be a group variety homomorphism over a field $K$ and $L\subset \overline K$ be a subfield containing $K$. Then $\phi$ induces a group homomorphism  $G_1(L) \to G_2(L)$.
 \end{lemma}
 \begin{proof}
@@ -245,6 +245,8 @@ Let $K$ be a field of characteristic $0$. Show that $\HomGrpVar(\A^1_K, \A^1_K)$
 \end{exercise}
 
 \subsection{Elliptic curves}
+
+
 
 \subsection{Some group theory}
 
@@ -267,7 +269,7 @@ Similarly a \textit{right group action} of $G$ on $S$ is a map $\rho: S \times G
 \end{itemize}
 \end{definition}
 
-\begin{lemma}\label{lem:left-group-action-is-group-hom}
+\begin{lemma}\label{stmt:left-group-action-is-group-hom}
 Let $G$ be a group and $S$ be a set and let $\rho : G \times S \to S$ be an arbitrary map. Then the following are equivalent:
 \begin{itemize}
 	\item $\rho$ is a left action of $G$ on $S$
@@ -283,7 +285,7 @@ Note that if $\rho$ is a group action then $f_\rho(g^{-1})$ is the inverse of $f
 
 
 The above lemma looks slightly different for right group actions.
-\begin{lemma}\label{lem:right-group-action-is-oppositie-group-hom}
+\begin{lemma}\label{stmt:right-group-action-is-oppositie-group-hom}
 	Let $G$ be a group and $S$ be a set and let $\rho : S \times G \to S$ be an arbitrary map. Then the following are equivalent:
 	\begin{itemize}
 		\item $\rho$ is a right action of $G$ on $S$
@@ -327,8 +329,71 @@ For injectivity let $s_1, s_1' \in S$ and $s_2, s_2' \in C$. If  $\stab{G}{s_2}s
 
 \subsection{Adeles}
 
+\section{Elliptic curves}
+
+\subsection{Elliptic curves of arbitrary fields}
+The following is the abstract definition of elliptic curve
+\begin{definition}\label{def:ec-over-K}
+Let $K$ be a field. An \textit{elliptic curve} over $K$ is a pair $(E,0)$ where $E$ is a smooth proper and geometrically irreducible curve defined over $K$ and $0 \in E(K)$ is a point. A \textit{morphism} of elliptic curves $\phi:  (E_1,0) \to (E_2,0)$ is a morphism of varieties $\phi: E_1 \to E_2$ such that $\phi(0)=0$.
+\end{definition}
+
+\subsubsection{Weierstrass models}
+The above definition is quite abstract. However, sometimes it is easier to work with explicit equations for elliptic curves. The goal of this subsection is to show that every elliptic curve over a field can be given by a Weierstrass model.
+
+\begin{definition}[Weierstrass model]\label{def:weierstrass-model-over-K}
+Let $a_1,a_2,a_3,a_4,a_6 \in K$ then define $E_{a_1,a_2,a_3,a_4,a_6} \subset \P^2$ to be the curve given by
+$$y^2z+ a_1xyz+a_3yz^2=x^3+a_2x^2z+a_4xz^2+a_6z^3.$$
+The point $0$ on $E$ is defined the point where $(x:y:z) = (0:1:0)$.
+\end{definition}
+
+\begin{proposition}\label{stmt:smooth-weierstrass-is-ec}
+If $E_{a_1,a_2,a_3,a_4,a_6}$ is smooth then $(E_{a_1,a_2,a_3,a_4,a_6},0)$ is an elliptic curve.
+\end{proposition}
+\begin{proof}
+\todo[inline]{add reference}
+\end{proof}
+
+\begin{proposition}\label{stmt:ec-has-weierstrass-model}
+Let $(E,0)$ be an elliptic curve over $K$ then there are $a_1,a_2,a_3,a_4,a_6 \in K$ such that 
+$$(E,0) \cong (E_{a_1,a_2,a_3,a_4,a_6},0)$$
+\end{proposition}
+\begin{proof}
+\todo[inline]{add reference}
+\end{proof}
+
+\todo[inline]{say something about isomorphisms between weierstrass models}
+
+\subsubsection{Group law}
+
+\subsubsection{Level structure}
+
+\begin{definition}
+Let $E$ be an elliptic curve over a field $K$ and let $N$ be an integer that is invertible in $K$. Then a \textit{full level $N$ structure on $E$} is a group isomorphism $\phi: (\Z/N\Z)^2 \to  E[N](K)$. 
+\end{definition}
+
+\begin{definition}
+Let $N$ be an integer that is invertible in $K$ and let $(E_1,\phi_1)$, $(E_2,\phi_2)$ two elliptic curves with full level $N$ structure over $K$. Then \textit{a morphism of elliptic curves with full level $N$ structure}  $f: (E_1,\phi_1) \to (E_2,\phi_2)$ is morphism $f: E_1 \to E_2$ of elliptic curves such that $f \circ \phi_1 = \phi_2$.
+\end{definition}
+
+
+\subsection{Elliptic curves over $C$}
+\begin{theorem}\label{stmt:complex-ec-is-C-mod-lattice}
+Let $E$ be an elliptic curve over $\C$ then there is lattice $\Lambda \subseteq \C$ such that $E(\C) \cong \C/\Lambda$ as Riemann-Surfaces.
+\end{theorem}
+\begin{proof}
+\todo[inline]{add reference}
+\end{proof}
+
+\begin{proposition}
+Let $\Lambda_1, \Lambda_2 \subset \C$ then the set of morphisms of elliptic curves $\C/\Lambda_1 \to \C/\Lambda_2$ is $$\Hom_{EC}(\C/\Lambda_1,\C/\Lambda_2) =\set{z \in \C \mid z\Lambda_1 \subseteq \Lambda_2}.$$ 
+An element $z \in \C$ defines an isogeny if and only if $z \neq 0$ and an isomorphism $z\Lambda_1 = \Lambda_2$.
+\end{proposition}
+
+\subsection{Families of elliptic curves}
 
 \section{Modular curves $\C\setminus \R$ and the upper half plane}
+
+
 
 \subsection{M\"obius transformations}
 
@@ -379,6 +444,8 @@ Now for the bijection $\IsoKVec{\R}(\R^2,\C)/\C^* \to \C \setminus \R$. First no
 \end{align*}
 is an inverse of $T'$.
 \end{proof}
+
+
 
 \section{A hint towards Shimura varieties}
 
