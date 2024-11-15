@@ -178,15 +178,17 @@
 \author{Maarten Derickx}
 %\date{August 2023}
 
+
 \begin{document}
 
 
 
 \begin{abstract}
-These are lecture notes for a course on modular curves given in Zagreb. The language of schemes is avoided as much as possible in order to keep the notes accessible.
+These are lecture notes for a course on modular curves given in Zagreb. The language of schemes is avoided in order to keep the notes accessible to an audience that is familiar with varieties but not with schemes.
 \end{abstract}
 
 \maketitle
+\setcounter{tocdepth}{3}
 \tableofcontents
 
 \section{Background}
@@ -196,7 +198,7 @@ These are lecture notes for a course on modular curves given in Zagreb. The lang
 \begin{itemize}
 	\item If $K$ is a field and $V_1,V_2$ are vector spaces over $K$ then $\IsoKVec{K}(V_1,V_2)$ denotes the set of isomorphisms between $V_1$ and $V_2$ as $K$ vector spaces.
 	\item If $R$ is a ring and $n >0 $ an integer then $M_n(R)$ denotes the set of $n$ by $n$ matrices.
-	\item If $A \in M_n(R)$ is a matrix then $A^\transpose$ denotes it's transpose. 
+	\item If $A \in M_n(R)$ is a matrix then $A^\transpose$ denotes its transpose. 
 \end{itemize}
 
 \newpage
@@ -316,8 +318,6 @@ Notice the absence of a compatibility condition for the inverse map, the reason 
 Let $K$ be a field of characteristic $0$. Show that $\HomGrpVar(\A^1_K, \A^1_K)$ consists of the linear polynomials $ax \in K[x]$ (hint: $\Hom(\A^1_K, \A^1_K) \cong K[x]$). 
 \end{exercise}
 
-\subsection{Elliptic curves}
-
 
 
 \subsection{Some group theory}
@@ -368,11 +368,11 @@ The above lemma looks slightly different for right group actions.
 	\end{itemize}
 \end{lemma}
 \begin{proof}
-	Similar to that of \cref{lem:left-group-action-is-group-hom}.
+	Similar to that of \cref{stmt:left-group-action-is-group-hom}.
 \end{proof}
 
 \begin{definition}\label{def:stabilizer}
-Let $\rho G \times S \to S$ be a left action of the group $G$ on the set $S$ and let $s \in S$. Then the stabalizer of $s$ in  $G$ is defined as \begin{align*}
+Let $\rho:  G \times S \to S$ be a left action of the group $G$ on the set $S$ and let $s \in S$. Then the stabalizer of $s$ in  $G$ is defined as \begin{align*}
 \stab{G}{s} := \set{ g \in G \mid \rho(g,s)=s}
 \end{align*}
 \end{definition}
@@ -409,7 +409,7 @@ The following is the abstract definition of elliptic curve
 Let $K$ be a field. An \textit{elliptic curve} over $K$ is a pair $(E,0)$ where $E$ is a smooth proper and geometrically irreducible curve defined over $K$ and $0 \in E(K)$ is a point. A \textit{morphism} of elliptic curves $\phi:  (E_1,0) \to (E_2,0)$ is a morphism of varieties $\phi: E_1 \to E_2$ such that $\phi(0)=0$.
 \end{definition}
 
-\subsubsection{Weierstrass models}
+\subsubsection{Weierstrass models}\label{sec:weierstrass-over-K}
 The above definition is quite abstract. However, sometimes it is easier to work with explicit equations for elliptic curves. The goal of this subsection is to show that every elliptic curve over a field can be given by a Weierstrass model.
 
 \begin{definition}[Weierstrass model]\label{def:weierstrass-model-over-K}
@@ -418,14 +418,14 @@ $$y^2z+ a_1xyz+a_3yz^2=x^3+a_2x^2z+a_4xz^2+a_6z^3.$$
 The point $0$ on $E$ is defined the point where $(x:y:z) = (0:1:0)$.
 \end{definition}
 
-\begin{proposition}\label{stmt:smooth-weierstrass-is-ec}
+\begin{proposition}[A smooth Weierstrass model is an elliptic curve]\label{stmt:smooth-weierstrass-over-k-is-ec}
 If $E_{a_1,a_2,a_3,a_4,a_6}$ is smooth then $(E_{a_1,a_2,a_3,a_4,a_6},0)$ is an elliptic curve.
 \end{proposition}
 \begin{proof}
 \todo[inline]{add reference}
 \end{proof}
 
-\begin{proposition}\label{stmt:ec-has-weierstrass-model}
+\begin{proposition}[Existence of Weierstrass model]\label{stmt:ec-over-k-has-weierstrass-model}
 Let $(E,0)$ be an elliptic curve over $K$ then there are $a_1,a_2,a_3,a_4,a_6 \in K$ such that 
 $$(E,0) \cong (E_{a_1,a_2,a_3,a_4,a_6},0)$$
 \end{proposition}
@@ -448,25 +448,10 @@ Let $N$ be an integer that is invertible in $K$ and let $(E_1,\phi_1)$, $(E_2,\p
 \end{definition}
 
 
-\subsection{Elliptic curves over $C$}
-\begin{theorem}\label{stmt:complex-ec-is-C-mod-lattice}
-Let $E$ be an elliptic curve over $\C$ then there is lattice $\Lambda \subseteq \C$ such that $E(\C) \cong \C/\Lambda$ as Riemann-Surfaces.
-\end{theorem}
-\begin{proof}
-\todo[inline]{add reference}
-\end{proof}
-
-\begin{proposition}
-Let $\Lambda_1, \Lambda_2 \subset \C$ then the set of morphisms of elliptic curves $\C/\Lambda_1 \to \C/\Lambda_2$ is $$\Hom_{EC}(\C/\Lambda_1,\C/\Lambda_2) =\set{z \in \C \mid z\Lambda_1 \subseteq \Lambda_2}.$$ 
-An element $z \in \C$ defines an isogeny if and only if $z \neq 0$ and an isomorphism if and only if $z\Lambda_1 = \Lambda_2$.
-\end{proposition}
-\begin{proof}
-	\todo[inline]{add reference}
-\end{proof}
 
 \subsection{Families of elliptic curves}
 
-\begin{definition}
+\begin{definition}\label{def:ec-over-var}
 Let $S$ be a variety over a field $K$. An \textit{elliptic curve over $S$} or \textit{a family of elliptic curves over $S$} is a triple $(E,f,0)$ where
 \begin{itemize}[label=-]
 	\item $E$ is a variety over $K$,
@@ -476,7 +461,7 @@ Let $S$ be a variety over a field $K$. An \textit{elliptic curve over $S$} or \t
 \end{itemize}
 \end{definition}
 
-Let $s \in S(\overline K)$. Note that since $f$ is smooth and proper the fiber $E_s$ will be smooth and proper over $\overline K$. It is also reduced and of genus $1$ by definition and $0_s$ will be a point on $E_s$. In particular for every  $s \in S(\overline K)$ the pair $(E_s,0_s)$ is an elliptic curve over $\overline K$. This explains where the term ``family of elliptic curves'' comes from.
+Let $L \subseteq \overline K$ be a field extension of $K$ and $s \in S(L)$. Note that since $f$ is smooth and proper the fiber $E_s$ will be smooth and proper over $L$. It is also geometrically reduced and of genus $1$ by definition and $0_s$ will be a point on $E_s$. In particular for every  $s \in S(L)$ the pair $(E_s,0_s)$ is an elliptic curve over $L$ according to \cref{def:ec-over-K}. This explains where the term ``family of elliptic curves'' comes from.
 
 \begin{definition}
 Let $(E_1,f_1,0)$ and $(E_2,f_2,0)$ be elliptic curve curves over $S$ then a \textit{morphisms of elliptic curves over $S$} is a regular map $h : E_1 \to E_2$ such that $f_1 = f_2\circ h$ and $0 = h \circ 0$.
@@ -498,6 +483,59 @@ I.e. $h$ should be such that the following two diagrams commute:
 \end{center}
 
 \end{definition}
+
+\subsubsection{Weierstrass models}
+
+Note that elliptic families do not always admit a global Weierstrass model. However, they do admit a Weierstrass model locally. As we will explain in this section.
+
+\begin{definition}[Weierstrass model]\label{def:weierstrass-model-over-var}
+Let $S$ be a variety over a field $K$, and let $a_1,a_2,a_3,a_4,a_6 \in \Gamma(S,\mathcal O_S)$ be regular functions such that for all $s \in S(\overline K)$ one has $\Delta_{a_1,a_2,a_3,a_4,a_6}(s) \neq 0$ (or equivalently $\Delta_{a_1,a_2,a_3,a_4,a_6} \in \Gamma(S,\mathcal O_S)^*$ ) \todo{define $\Delta$}. Then the Weierstrass-Model with invariants $a_1,a_2,a_3,a_4,a_6$ is defined to be the triple $(E_{a_1,a_2,a_3,a_4,a_6},f,0)$ over $S$ where, \begin{itemize}[label=-]
+	\item $E_{a_1,a_2,a_3,a_4,a_6} \subset \P^2_K \times S$ is the curve given by
+	$$y^2z+ a_1(s)xyz+a_3(s)yz^2=x^3+a_2(s)x^2z+a_4(s)xz^2+a_6(s)z^3.$$
+	\item The map $f:  E_{a_1,a_2,a_3,a_4,a_6} \to S$ is projection onto the second coordinate.
+	\item  $0 : S \to E_{a_1,a_2,a_3,a_4,a_6} $  is the map $s \mapsto ((x:y:z),s)$.
+\end{itemize}
+\end{definition}
+
+\begin{proposition}[A Weierstrass model over $S$ defines family of elliptic curves]\label{stmt:smooth-weierstrass-over-var-is-ec}
+The triple $(E_{a_1,a_2,a_3,a_4,a_6},f,0)$ of \cref{def:weierstrass-model-over-var} is a family of elliptic curves as in \cref{def:ec-over-var}.
+\end{proposition}
+\begin{proof}
+	\todo[inline]{add reference to Katz-Mazur?}
+\end{proof}
+
+\begin{proposition}[Existence of local Weierstrass model]\label{stmt:ec-over-var-has-local-weierstrass-model}
+	Let $(E,f,0)$ be a family of elliptic curve over a variety $S$ and $s\in S$. Then there exists an affine open $U \subset S$ with $s \in U$ and regular functions $a_1,a_2,a_3,a_4,a_6 \in \Gamma(U,\mathcal O_U)$ such that 
+	$$(E_U,f,0) \cong (E_{a_1,a_2,a_3,a_4,a_6},f,0).$$
+\end{proposition}
+\begin{proof}
+	\todo[inline]{add reference to Katz-Mazur?}
+\end{proof}
+
+\todo[inline]{say something about isomorphisms between weierstrass models again?}
+
+\todo[inline]{Give an example of something that doesn't have a global Weierstrass model.}
+
+\subsubsection{Group law}
+
+\subsubsection{Level structure}
+
+
+\subsection{Elliptic curves over $\C$}
+\begin{theorem}\label{stmt:complex-ec-is-C-mod-lattice}
+	Let $E$ be an elliptic curve over $\C$ then there is lattice $\Lambda \subseteq \C$ such that $E(\C) \cong \C/\Lambda$ as Riemann-Surfaces.
+\end{theorem}
+\begin{proof}
+	\todo[inline]{add reference}
+\end{proof}
+
+\begin{proposition}
+	Let $\Lambda_1, \Lambda_2 \subset \C$ then the set of morphisms of elliptic curves $\C/\Lambda_1 \to \C/\Lambda_2$ is $$\Hom_{EC}(\C/\Lambda_1,\C/\Lambda_2) =\set{z \in \C \mid z\Lambda_1 \subseteq \Lambda_2}.$$ 
+	An element $z \in \C$ defines an isogeny if and only if $z \neq 0$ and an isomorphism if and only if $z\Lambda_1 = \Lambda_2$.
+\end{proposition}
+\begin{proof}
+	\todo[inline]{add reference}
+\end{proof}
 
 \section{Modular curves $\C\setminus \R$ and the upper half plane}
 
