@@ -15,9 +15,9 @@
 \usepackage[all,cmtip]{xy}
 \usepackage[hyphens]{url}
 \usepackage{hyperref}
-\usepackage{cleveref}
 \usepackage{tikz}
 \usetikzlibrary{cd}
+\usepackage{enumitem}
 
 \setlength\marginparwidth{2cm}
 
@@ -28,6 +28,7 @@
 \usepackage{eqparbox}
 \newcommand{\eqmathbox}[2][M]{\eqmakebox[#1]{$\displaystyle#2$}}
 \usepackage{pbox}
+\usepackage{cleveref}
 
 
 %make todonotes work with amsart
@@ -157,11 +158,19 @@
 \newtheorem{lemma}{Lemma}
 \newtheorem{theorem}[lemma]{Theorem}
 \newtheorem{proposition}[lemma]{Proposition}
+\newlist{propenum}{enumerate}{1} % also creates a counter called 'propenumi'
+\setlist[propenum]{label=\roman*), ref=\theproposition(\roman*)}
+\crefalias{propenumi}{proposition} 
 \newtheorem{corollary}[lemma]{Corollary}
 \newtheorem*{claim}{Claim}
 
+
 \theoremstyle{definition}
 \newtheorem{definition}[lemma]{Definition}
+\newlist{defenum}{enumerate}{1} % also creates a counter called 'defenumi'
+\setlist[defenum]{label=\roman*), ref=\thedefinition(\roman*)}
+\crefalias{defenumi}{definition} 
+
 \newtheorem{example}[lemma]{Example}
 \newtheorem{exercise}[lemma]{Exercise}
 \newtheorem{notation}[lemma]{Notation}
@@ -202,6 +211,44 @@ These are lecture notes for a course on modular curves given in Zagreb. The lang
 \end{itemize}
 
 \newpage
+\subsection{Varieties}
+
+
+
+\hspace{1em}\todo[inline]{say something about varieties over non algebraically closed fields as in section 1 of Silverman}
+
+\subsubsection{Families of varieties.}
+\begin{definition}[Family of varieties.]\label{def:family-of-varieties}
+Let $S$ by a variety over a field $K$. A \textit{family of varieties over $S$} is a pair $(X,f)$ where 
+\begin{defenum}
+	\item $X$ is a variety over $K$,
+	\item $f: X \to S$ is a regular map,
+	\item for every $s \in S(\overline K)$ the fiber $f^{-1}(s) \subseteq X$ is a variety over $K$. \label{def:family-of-varieties-fibers}
+\end{defenum}
+\end{definition}
+
+\begin{notation}\label{def:fiber-notation}
+Let $(X,f)$ be a family of varieties over $S$ and $s \in S(\overline K)$, then $X_s :=f^{-1}(s)$ is used as shorthand notation for the fiber above $s$.
+\end{notation}
+Note that $f^{-1}(s)$ is always an algebraic subset of $X(\overline K)$. So \Cref{def:family-of-varieties-fibers} is equivalent to the fiber $f^{-1}(s)$ being irreducible.
+
+\begin{definition}[Morphism of families]\label{def:family-of-varieties-morphism}
+Let $S$ by a variety over a field $K$ and $(X_1,f_1), (X_2,f_2)$ be two families of varieties over $S$. A morphism of families from $(X_1,f_1)$ to $(X_2,f_2)$ is a regular map $h: X_1 \to X_2$ defined over $K$ such that $f_1 = f_2 \circ h$.
+\begin{center}
+    \begin{tikzcd}
+	X_1 \arrow[rr,"h"] \arrow[dr, "f_1"']  & & X_2 \arrow[dl, "f_2"] \\
+	& S &
+\end{tikzcd}
+\end{center}
+\end{definition}
+
+Let $s \in  S(\overline K)$ and let $h_s : X_{1,s} \to X_{2,s}$  denote the restriction of $h$ to the fibers above $s$. It follows from \Cref{def:family-of-varieties-morphism} that $h_s$ is a regular map between varieties over $\overline K$. Note that if $s$ lies in some field $L \subset \overline K$ and $K \subset L$ then $h_s$ is actually defined over $L.$
+
+\begin{notation}
+	Let $(T,f_1), (X,f_2)$ be two families of varieties over $S$, then $X(T)$ is shorthand notation for the set of morphisms as in \Cref{def:family-of-varieties-morphism}. Similarly $X(S)$ is shorthand notation where $(T,f_1) = (S, \id_S)$. 
+\end{notation}
+The notation $X(S)$ also agrees by definition with the set of sections of $f_2 : X \to S$ since the commutative diagram in \Cref{def:family-of-varieties-morphism} reduces to the relation $\id_S = f_2 \circ h$ when $(T,f_1) = (S, \id_S)$.
+
 \subsection{Fiber products}
 
 \begin{definition}
@@ -237,6 +284,10 @@ If a fiber product $X\times_Z Y$ exists as in the definition, then it is unique 
 	\end{align*}
 \end{remark}
 
+\begin{remark}\label{rem:fiber-product-map-to-base}
+If the fiber product $X \times_Z Y$ exists then $f \circ h = g \circ i$. So the fiber product  $X \times_Z Y$ comes equiped with a canonical map $f \circ h = g \circ i$  to $Z$.
+\end{remark}
+
 
 \begin{definition}\label{def:fiber_product_concrete}
 Let $f: X \to Z$ and $g : Y \to Z$ be regular maps between varieties over a field $K$. Define $X\times'_Z Y \subset X \times Y$ to be the closed subset
@@ -261,6 +312,15 @@ If $X\times'_Z Y$ from \cref{def:fiber_product_concrete} is geometrically irredu
 \begin{proof}
 	\todo[inline]{add proof}
 \end{proof}
+
+\begin{exercise}
+	Let $S$ be a variety over a field $K$ and $(X_1,f_1), (X_2,f_2)$ be two families of varieties over $S$ such that the fiber product $X_1 \times_S X_2$ exists. Show that 
+	\begin{enumerate}
+		\item $X_1 \times_S X_2 \to S$ is a family of varieties over $S$, where $X_1 \times_S X_2 \to S$ is the map from \Cref{rem:fiber-product-map-to-base},
+		\item for all $s \in S(\overline K)$ one has $(X_1 \times_S X_2)_s$ is isomorphic to $X_{1,s} \times X_{2,s}$, i.e. the fiber above $s$ of the fiber product is just the product of the the fibers.
+
+	\end{enumerate}
+\end{exercise}
 
 \subsection{Group varieties}
 \begin{definition}\label{def:group-variety}
@@ -406,44 +466,163 @@ For injectivity let $s_1, s_1' \in S$ and $s_2, s_2' \in C$. If  $\stab{G}{s_2}s
 \subsection{Elliptic curves of arbitrary fields}
 The following is the abstract definition of elliptic curve
 \begin{definition}\label{def:ec-over-K}
-Let $K$ be a field. An \textit{elliptic curve} over $K$ is a pair $(E,0)$ where $E$ is a smooth proper and geometrically irreducible curve defined over $K$ and $0 \in E(K)$ is a point. A \textit{morphism} of elliptic curves $\phi:  (E_1,0) \to (E_2,0)$ is a morphism of varieties $\phi: E_1 \to E_2$ such that $\phi(0)=0$.
+Let $K$ be a field. An \textit{elliptic curve} over $K$ is a pair $(E,0)$ where $E$ is a smooth proper and geometrically irreducible curve of genus $1$ defined over $K$ and $0 \in E(K)$ is a point. A \textit{morphism} of elliptic curves $\phi:  (E_1,0) \to (E_2,0)$ is a morphism of varieties $\phi: E_1 \to E_2$ such that $\phi(0)=0$.
 \end{definition}
+
+Note that often when talking about elliptic curves, the element $0 \in E(K)$ is understood to be implicitly part of the data. And one writes $E$ instead of $(E,0)$.
 
 \subsubsection{Weierstrass models}\label{sec:weierstrass-over-K}
 The above definition is quite abstract. However, sometimes it is easier to work with explicit equations for elliptic curves. The goal of this subsection is to show that every elliptic curve over a field can be given by a Weierstrass model.
 
 \begin{definition}[Weierstrass model]\label{def:weierstrass-model-over-K}
-Let $a_1,a_2,a_3,a_4,a_6 \in K$ then define $E_{a_1,a_2,a_3,a_4,a_6} \subset \P^2$ to be the curve given by
+Let $a := (a_1,a_2,a_3,a_4,a_6) \in K^5$ then define $E_{A} \subset \P^2$ to be the curve given by
 $$y^2z+ a_1xyz+a_3yz^2=x^3+a_2x^2z+a_4xz^2+a_6z^3.$$
 The point $0$ on $E$ is defined the point where $(x:y:z) = (0:1:0)$.
 \end{definition}
 
+
+
+Note there is no $a_5$ in the above definition. This is on purpose and will become clear later.
+Before we continue we need to define a quantity called the discriminant.
+\begin{definition}[Discriminant]
+The $b$-invariants $b_2,b_4,b_6,b_8 \in \Z[a_1,a_2,a_3,a_4,a_6]$ and the \text{discriminant} $\Delta \in \Z[a_1,a_2,a_3,a_4,a_6]$ are defined as follows:
+\begin{align*}
+b_2 &= a_1^2 + 4 a_2 \\
+b_4 &= 2a_4 + a_1 a_3 \\
+b_6 &= a_3^2 + 4 a_6 \\
+b_8 &= a_1^2 a_6 + 4a_2 a_6 - a_1 a_3 a_4 + a_2 a_3^2 - a_4^2 \\
+\Delta &= -b_2^2 b_8 - 8b_4^3 - 27b_6^2 + 9b_2 b_4 b_6.
+\end{align*}
+If $R$ is a ring and $a := (a'_1,a'_2,a'_3,a'_4,a'_6) \in R^5$ then $\Delta_a$ will be shorthand notation for $\Delta(a'_1,a'_2,a'_3,a'_4,a'_6)$.
+\end{definition}
+The first hint of why the $5$-th coefficient is labeled $a_6$ and not $a_5$ is already visible in this definition. Namely if we see $\Z[a_1,a_2,a_3,a_4,a_6]$ as a weighted polynomial ring where $a_i$ has weight $i$, then the $b_i$ are homogeneous of weight $i$ and $\Delta$ is homogeneous of weight $12$.
+
 \begin{proposition}[A smooth Weierstrass model is an elliptic curve]\label{stmt:smooth-weierstrass-over-k-is-ec}
-If $E_{a_1,a_2,a_3,a_4,a_6}$ is smooth then $(E_{a_1,a_2,a_3,a_4,a_6},0)$ is an elliptic curve.
+Let $K$ be a field and $a :=  (a_1,a_2,a_3,a_4,a_6) \in K^5$ then the following are equivalent:
+\begin{itemize}[label=-]
+	\item The pair $(E_{a},0)$ is an elliptic curve.
+	\item The curve $E_{a}$ is smooth.
+    \item $\Delta_a \neq 0$.
+\end{itemize}
 \end{proposition}
 \begin{proof}
-\todo[inline]{add reference}
+\todo[inline]{add reference to silverman}
 \end{proof}
 
-\begin{proposition}[Existence of Weierstrass model]\label{stmt:ec-over-k-has-weierstrass-model}
-Let $(E,0)$ be an elliptic curve over $K$ then there are $a_1,a_2,a_3,a_4,a_6 \in K$ such that 
-$$(E,0) \cong (E_{a_1,a_2,a_3,a_4,a_6},0)$$
+
+
+\begin{theorem}[Existence of Weierstrass model]\label{stmt:ec-over-k-has-weierstrass-model}
+Let $(E,0)$ be an elliptic curve over $K$ then there is an $a := (a_1,a_2,a_3,a_4,a_6) \in K^5$ such that
+$$\Delta_{a} \neq 0 \text{ and } (E,0) \cong (E_{a},0).$$
+\end{theorem}
+\begin{proof}
+\todo[inline]{add reference  to silverman}
+\end{proof}
+
+\begin{proposition}[Isomorphisms between Weierstrass models]\label{stmt:iso-between-weierstrass-over-K-is-urst}
+	Let $K$ be a field,  $a := (a_1,a_2,a_3,a_4,a_6)$  and $a' := (a'_1,a'_2,a'_3,a'_4,a'_6) $ elements of $K^5$ such that $\Delta_a \neq 0$ and $\Delta_{a'} \neq 0$ . If $f : E_a \to E_{a'}$ is an isomorphism of elliptic curves. Then there are $u \in K^*$ and $r,s,t \in K$ such that $f=f_{u,r,s,t}$ where $f_{u,r,s,t}$ is given by
+\begin{align}
+&f_{u,r,s,t} : &E_a &\to E_{a'} \label{eq:weierstrass-isomorphism} \\
+& &(x:y:z) & \mapsto (u^2x+rz:u^3y+u^2sx+tz:z) \nonumber
+\end{align}
 \end{proposition}
 \begin{proof}
-\todo[inline]{add reference}
+	\todo[inline]{add reference  to silverman  and say that we use an inverse convention}
 \end{proof}
 
-\todo[inline]{say something about isomorphisms between weierstrass models}
+\begin{comment}
+The sage code that verifies these computations.
+# R1.<a1,a2,a3,a4,a6> = QQ[]
+# R2.<u,r,s,t> = R1[]
+R1.<u,r,s,t> = QQ[]
+R2.<a6,a4,a3,a2,a1> = R1[]
+R3.<x,y,z> = R2[]
+f = y^2*z+ a1*x*y*z+a3*y*z^2-(x^3+a2*x^2*z+a4*x*z^2+a6*z^3)
+x1 = u^2*x+r*z
+y1 = u^3*y+u^2*s*x+t*z
+z1 = z
+f1 = f(x=x1,y=y1,z=z1)/u^6
+x2 = (x-r*z)/u^2
+y2 = (y-s*(x-r*z)-t*z)/u^3
+z2 = z
+f2 = f(x=x2,y=y2,z=z2)*u^6
+ff2 = R3(f2.numerator())
+assert f2 == ff2
+aa1 = ff2.coefficient(x*y*z)
+aa2 = -ff2.coefficient(x^2*z)
+aa3 = ff2.coefficient(y*z^2)
+aa4 = -ff2.coefficient(x*z^2)
+aa6 = -ff2.coefficient(z^3)
+assert aa1 == R3(a1*u - 2*s)
+assert aa2 == R3(a2*u^2 + a1*u*s - s^2 -3*r)
+aa3_red =  R3(a3*u^3 + (-2)*t)
+assert aa3 == aa3_red - aa1*r
+aa4_red = R3(a4*u^4 + a3*u^3*s + (-3)*r^2 + a1*u*t + (-2)*s*t)
+assert aa4 == aa4_red-2*aa2*r
+aa6_red =R3(a6*u^6 + a3*u^3*t - r^3 - t^2)
+assert aa6 == aa6_red-aa4*r-aa2*r^2
+sage: latex(aa1)
+u a_{1} - 2 s
+sage: latex(aa2)
+u^{2} a_{2} + \left(u s\right) a_{1} - s^{2} - 3 r
+sage: latex(aa3)
+u^{3} a_{3} + \left(-u r\right) a_{1} + 2 r s - 2 t
+sage: latex(aa3_red)
+u^{3} a_{3} - 2 t
+sage: latex(aa4_red)
+u^{4} a_{4} + \left(u^{3} s\right) a_{3} + \left(u t\right) a_{1} - 3 r^{2} - 2 s t
+sage: latex(aa6_red)
+u^{6} a_{6} + \left(u^{3} t\right) a_{3} - r^{3} - t^{2}
+\end{comment}
 
+Note that there is also the following converse to the above proposition.
+\begin{proposition}[Change of Weierstrass model]\label{stmt:urst-is-iso-between-weierstrass-over-K-is}
+Let $K$ be a field,  $a := (a_1,a_2,a_3,a_4,a_6) \in K^5$, $u \in K^*$ and $r,s,t \in K$. Define 
+% sage: f2
+% -x^3 + ((-a2)*u^2 + (-a1)*u*s + s^2 + 3*r)*x^2*z + (a1*u + (-2)*s)*x*y*z + y^2*z + ((-a4)*u^4 + (-a3)*u^3*s + 2*a2*u^2*r + 2*a1*u*r*s + (-2)*r*s^2 + (-3)*r^2 + (-a1)*u*t + 2*s*t)*x*z^2 + (a3*u^3 + (-a1)*u*r + 2*r*s + (-2)*t)*y*z^2 + ((-a6)*u^6 + a4*u^4*r + a3*u^3*r*s + (-a2)*u^2*r^2 + (-a1)*u*r^2*s + r^2*s^2 + (-a3)*u^3*t + r^3 + a1*u*r*t + (-2)*r*s*t + t^2)*z^3
+\begin{comment}
+the raw unsimplyfied stuff
+\begin{align*} 
+a'_1 & := a_1u -2s \\
+a'_2 & := a_2u^2 + a_1us - s^2 -3r\\ 
+a'_3 & := a_3u^3 - a_1ur + 2rs -2t \\
+a'_4 & := a_4u^4 + a_3u^3s -2a_2u^2r -2a_1urs + 2rs^2 + 3r^2 + a_1ut + -2st \\
+a'_6 & := a_{6} u^{6} - a_{4} u^{4} r - a_{3} u^{3} r s + a_{2} u^{2} r^{2} + a_{1} u r^{2} s - r^{2} s^{2} + a_{3} u^{3} t - r^{3} -a_{1} u r t + 2 r s t - t^{2}
+\end{align*} 
+\end{comment}
+\begin{align}
+\begin{split}
+a'_1 &:= u a_{1} - 2 s \\
+a'_2 &:= u^{2} a_{2} + u s a_{1} - s^{2} - 3 r \\
+a'_3 &:= u^{3} a_{3} - a'_1 r - 2 t \\
+a'_4 &:= u^{4} a_{4} - 2 a'_2 r + u^{3} s a_{3} + u t a_{1} - 3 r^{2} - 2 s t \\
+a'_6 &:= u^{6} a_{6} - a'_4 r - a'_2 r^2 + \left(u^{3} t\right) a_{3} - r^{3} - t^{2}\\
+a' &:= (a'_1,a'_2,a'_3,a'_4,a'_6).
+\end{split}
+\end{align}
+Then $f_{u,r,s,t}$ from \cref{eq:weierstrass-isomorphism} defines an isomorphism between $E_a$ and $E_{a'}$. 
+
+\end{proposition}
+\begin{proof}
+	\todo[inline]{add reference  to silverman  and say that we use an inverse convention}
+\end{proof}
 \subsubsection{Group law}
 
 \subsubsection{Level structure}
 
-\begin{definition}
-Let $E$ be an elliptic curve over a field $K$ and let $N$ be an integer that is invertible in $K$. Then a \textit{full level $N$ structure on $E$} is a group isomorphism $\phi: (\Z/N\Z)^2 \to  E[N](K)$. 
+\begin{definition}[Level structures]
+	Let $E$ be an elliptic curve over a field $K$ and let $N$ be an integer. 
+	\begin{defenum}
+		\item Assume $N$ is invertible in $K$ then a \textit{full level $N$ structure on $E$} is a group isomorphism $\phi: (\Z/N\Z)^2 \to  E[N](K),$ \label{def:full-level-structure-over-K}
+		\item Assume $N$ is invertible in $K$  a \textit{a point of order $N$ on $E$} is an injective group homomorphism $\phi: \Z/N\Z \to  E[N](K),$ \label{def:point-of-order-N-over-K}
+		\item  a \textit{a point of order $\geq N$ on $E$} is an group homomorphism $\phi: \Z \to  E[N](K)$ whose image has cardinality $\geq N$. \label{def:point-of-order-geq-N-over-K}
+	\end{defenum}
 \end{definition}
+\begin{remark}
+Since $E[N](\overline K) \cong  (\Z/N\Z)^2$, \Cref{def:full-level-structure-over-K} is equivalent to giving $P,Q \in E[N](K)$ such that they together generate $E[N](\overline K)$. \Cref{def:point-of-order-N-over-K} is equivalent to giving a point $P \in E[N](K)$ of order $N$, and \cref{def:point-of-order-geq-N-over-K} is equivalent to giving a $P \in E[N](K)$ of order $\geq N$.
+\end{remark}
 
-\begin{definition}
+\begin{definition}[Morphism with level structure]
 Let $N$ be an integer that is invertible in $K$ and let $(E_1,\phi_1)$, $(E_2,\phi_2)$ two elliptic curves with full level $N$ structure over $K$. Then \textit{a morphism of elliptic curves with full level $N$ structure}  $f: (E_1,\phi_1) \to (E_2,\phi_2)$ is morphism $f: E_1 \to E_2$ of elliptic curves such that $f \circ \phi_1 = \phi_2$.
 \end{definition}
 
@@ -451,36 +630,40 @@ Let $N$ be an integer that is invertible in $K$ and let $(E_1,\phi_1)$, $(E_2,\p
 
 \subsection{Families of elliptic curves}
 
-\begin{definition}\label{def:ec-over-var}
+\begin{definition}[Family of elliptic curves]\label{def:ec-over-var}
 Let $S$ be a variety over a field $K$. An \textit{elliptic curve over $S$} or \textit{a family of elliptic curves over $S$} is a triple $(E,f,0)$ where
-\begin{itemize}[label=-]
+\begin{defenum}
 	\item $E$ is a variety over $K$,
 	\item $f : E \to S$ is a smooth and proper map,
 	\item $0$ is a section of $f$; i.e.  a regular map $0: S \to E$ such that $f \circ 0 = \id_S$,
 	\item for all $s \in S(\overline K)$ the fiber $E_{s} := f^{-1}(s)$ above $s$ is a curve over $\overline K$ that is irreducible  and of genus $1$.
-\end{itemize}
+\end{defenum}
 \end{definition}
 
-Let $L \subseteq \overline K$ be a field extension of $K$ and $s \in S(L)$. Note that since $f$ is smooth and proper the fiber $E_s$ will be smooth and proper over $L$. It is also geometrically reduced and of genus $1$ by definition and $0_s$ will be a point on $E_s$. In particular for every  $s \in S(L)$ the pair $(E_s,0_s)$ is an elliptic curve over $L$ according to \cref{def:ec-over-K}. This explains where the term ``family of elliptic curves'' comes from.
 
-\begin{definition}
-Let $(E_1,f_1,0)$ and $(E_2,f_2,0)$ be elliptic curve curves over $S$ then a \textit{morphisms of elliptic curves over $S$} is a regular map $h : E_1 \to E_2$ such that $f_1 = f_2\circ h$ and $0 = h \circ 0$.
+
+Let $L \subseteq \overline K$ be a field extension of $K$ and $s \in S(L)$. Note that since $f$ is smooth and proper the fiber $E_s$ will be smooth and proper over $L$. It is also geometrically reduced and of genus $1$ by definition and $0_s$ will be a point on $E_s$. In particular for every  $s \in S(L)$ the pair $(E_s,0_s)$ is an elliptic curve over $L$ according to \cref{def:ec-over-K}. Also the pair $(E,f)$ is a family of varieties as in \Cref{def:family-of-varieties}.
+
+\begin{definition}[Morphism of families of elliptic curves]
+Let $(E_1,f_1,0)$ and $(E_2,f_2,0)$ be elliptic curve curves over $S$ then a \textit{morphism of families of elliptic curves over $S$} is a regular map $h : E_1 \to E_2$ such that $f_1 = f_2\circ h$ and $0 = h \circ 0$.
 I.e. $h$ should be such that the following two diagrams commute:
 \begin{center}
 
 
 \begin{tabular}{cc}	
     \begin{tikzcd}
-	    E \arrow[rr,"h"] \arrow[dr, "f"']  & & E \arrow[dl, "g"] \\
+	    E_1 \arrow[rr,"h"] \arrow[dr, "f_1"']  & & E_2 \arrow[dl, "f_2"] \\
 	    & S &
     \end{tikzcd}
 	&
 	\begin{tikzcd}
-		E\arrow[rr,"h"]& & E & \\
+		E_1 \arrow[rr,"h"]& & E_2 & \\
 		& S  \arrow[ul, swap, "0"']  \arrow[ur, "0"'] & .
 	\end{tikzcd}
 \end{tabular}
 \end{center}
+
+The first commutative diagram, i.e. the relation $f_1 = f_2\circ h$, ensures that $h$ is a morphsim of families of varieties (\Cref{def:family-of-varieties-morphism}). While the commutative diagram, ie. $0 = h \circ 0$ ensures that for all $s \in S(\overline K)$ one has $h_s(0_s) = 0_s$.  This means that on fibers $h_s$ is not just a morphisms of varieties, but actually a morphism of elliptic curves as in \Cref{def:ec-over-K}.
 
 \end{definition}
 
@@ -488,12 +671,14 @@ I.e. $h$ should be such that the following two diagrams commute:
 
 Note that elliptic families do not always admit a global Weierstrass model. However, they do admit a Weierstrass model locally. As we will explain in this section.
 
+However before doing this we first need to
+
 \begin{definition}[Weierstrass model]\label{def:weierstrass-model-over-var}
-Let $S$ be a variety over a field $K$, and let $a_1,a_2,a_3,a_4,a_6 \in \Gamma(S,\mathcal O_S)$ be regular functions such that for all $s \in S(\overline K)$ one has $\Delta_{a_1,a_2,a_3,a_4,a_6}(s) \neq 0$ (or equivalently $\Delta_{a_1,a_2,a_3,a_4,a_6} \in \Gamma(S,\mathcal O_S)^*$ ) \todo{define $\Delta$}. Then the Weierstrass-Model with invariants $a_1,a_2,a_3,a_4,a_6$ is defined to be the triple $(E_{a_1,a_2,a_3,a_4,a_6},f,0)$ over $S$ where, \begin{itemize}[label=-]
-	\item $E_{a_1,a_2,a_3,a_4,a_6} \subset \P^2_K \times S$ is the curve given by
+Let $S$ be a variety over a field $K$, and let $a := (a_1,a_2,a_3,a_4,a_6 )$ where $a_1,a_2,a_3,a_4,a_6 \in \Gamma(S,\mathcal O_S)$ be regular functions such that for all $s \in S(\overline K)$ one has $\Delta_{a}(s) \neq 0$ (or equivalently $\Delta_{a} \in \Gamma(S,\mathcal O_S)^*$ ) \todo{define $\Delta$}. Then the Weierstrass-Model with invariants $a:={a_1,a_2,a_3,a_4,a_6}$ is defined to be the triple $(E_{a},f,0)$ over $S$ where, \begin{itemize}[label=-]
+	\item $E_{a} \subset \P^2_K \times S$ is the curve given by
 	$$y^2z+ a_1(s)xyz+a_3(s)yz^2=x^3+a_2(s)x^2z+a_4(s)xz^2+a_6(s)z^3.$$
-	\item The map $f:  E_{a_1,a_2,a_3,a_4,a_6} \to S$ is projection onto the second coordinate.
-	\item  $0 : S \to E_{a_1,a_2,a_3,a_4,a_6} $  is the map $s \mapsto ((x:y:z),s)$.
+	\item The morphism $f:  E_{a} \to S$ is projection onto the second coordinate.
+	\item  $0 : S \to E_{a} $  is the morphism $s \mapsto ((x:y:z),s)$.
 \end{itemize}
 \end{definition}
 
@@ -506,7 +691,10 @@ The triple $(E_{a_1,a_2,a_3,a_4,a_6},f,0)$ of \cref{def:weierstrass-model-over-v
 
 \begin{proposition}[Existence of local Weierstrass model]\label{stmt:ec-over-var-has-local-weierstrass-model}
 	Let $(E,f,0)$ be a family of elliptic curve over a variety $S$ and $s\in S$. Then there exists an affine open $U \subset S$ with $s \in U$ and regular functions $a_1,a_2,a_3,a_4,a_6 \in \Gamma(U,\mathcal O_U)$ such that 
-	$$(E_U,f,0) \cong (E_{a_1,a_2,a_3,a_4,a_6},f,0).$$
+	\begin{align*}
+	 \Delta_{a_1,a_2,a_3,a_4,a_6} \in \Gamma(S,\mathcal O_S)^* \text{ and }
+	 (E_U,f,0) \cong (E_{a_1,a_2,a_3,a_4,a_6},f,0).
+	\end{align*}
 \end{proposition}
 \begin{proof}
 	\todo[inline]{add reference to Katz-Mazur?}
@@ -526,7 +714,7 @@ The triple $(E_{a_1,a_2,a_3,a_4,a_6},f,0)$ of \cref{def:weierstrass-model-over-v
 	Let $E$ be an elliptic curve over $\C$ then there is lattice $\Lambda \subseteq \C$ such that $E(\C) \cong \C/\Lambda$ as Riemann-Surfaces.
 \end{theorem}
 \begin{proof}
-	\todo[inline]{add reference}
+	\todo[inline]{add reference to Silverman}
 \end{proof}
 
 \begin{proposition}
@@ -534,7 +722,7 @@ The triple $(E_{a_1,a_2,a_3,a_4,a_6},f,0)$ of \cref{def:weierstrass-model-over-v
 	An element $z \in \C$ defines an isogeny if and only if $z \neq 0$ and an isomorphism if and only if $z\Lambda_1 = \Lambda_2$.
 \end{proposition}
 \begin{proof}
-	\todo[inline]{add reference}
+	\todo[inline]{add reference Silverman}
 \end{proof}
 
 \section{Modular curves $\C\setminus \R$ and the upper half plane}
