@@ -143,6 +143,7 @@
 \DeclareMathOperator{\IsogPrimeDeg}{\textup{\textsf{IsogPrimeDeg}}}
 \DeclareMathOperator{\BadFormalImmersion}{\textup{\textsf{BadFormalImmersion}}}
 \DeclareMathOperator{\AGFI}{\textup{\textsf{AGFI}}}
+\DeclareMathOperator{\Ell}{Ell}
 
 \newcommand{\Cusp}{\Div^{c}}
 \newcommand{\Cuspo}{\Div^{0,c}}
@@ -208,6 +209,7 @@ These are lecture notes for a course on modular curves given in Zagreb. The lang
 	\item If $K$ is a field and $V_1,V_2$ are vector spaces over $K$ then $\IsoKVec{K}(V_1,V_2)$ denotes the set of isomorphisms between $V_1$ and $V_2$ as $K$ vector spaces.
 	\item If $R$ is a ring and $n >0 $ an integer then $M_n(R)$ denotes the set of $n$ by $n$ matrices.
 	\item If $A \in M_n(R)$ is a matrix then $A^\transpose$ denotes its transpose. 
+	\item If $\mathcal C$ is a category then $\mathcal C^{op}$ denotes the oposite category. I.e. the  category that has the same objects, but where the direction of all morphisms are reversed.
 \end{itemize}
 
 \newpage
@@ -251,7 +253,7 @@ The notation $X(S)$ also agrees by definition with the set of sections of $f_2 :
 
 \subsection{Fiber products}
 
-\begin{definition}
+\begin{definition}\label{def:fiber-product-abstract}
 Let $f: X \to Z$ and $g : Y \to Z$ be regular maps between varieties over a field $K$. The \textit{fiber product of $X$ and $Y$ over $Z$}, if it exists, is a variety $X \times_Z Y$ together with commutative diagram of the form 
 \[
 \begin{tikzcd}
@@ -274,9 +276,19 @@ T \arrow[ddr, bend right, "u"'] \arrow[drr, bend left, "v"] \arrow[dr, dashed, "
 & X \arrow[r, "f"'] & Z.
 \end{tikzcd}
 \]
-\end{definition}\label{def:fiber_product_abstract}
+\end{definition}
 If a fiber product $X\times_Z Y$ exists as in the definition, then it is unique up to a unique isomorphim as is always the case with objects defined using universal properties.
 
+\begin{definition}\label{def:cartesian-square}
+A cartesian square is a diagram of the form
+\[
+\begin{tikzcd}
+	T \arrow[r,"u"] \arrow[d,"v"] & Y \arrow[d, "g"] \\
+	X \arrow[r, "f"'] & Z,
+\end{tikzcd}
+\]
+such that the map $\phi$ from \Cref{def:fiber-product-abstract} is an isomorphsim.
+\end{definition}
 \begin{remark}Instead of using the language of universal properties, one could also define the fiber product in terms of a varieties representing a functor. I.e.  $X \times_Z Y$, if it exists, is the variety representing the contravariant functor
 	\begin{align*}
 	    F_{f,g} : \Var_K^{op} &\to \Sets \\
@@ -608,7 +620,7 @@ Then $f_{u,r,s,t}$ from \cref{eq:weierstrass-isomorphism} defines an isomorphism
 \end{proof}
 \subsubsection{Group law}
 
-\subsubsection{Level structure}
+\subsubsection{Level structures}
 
 \begin{definition}[Level structures]
 	Let $E$ be an elliptic curve over a field $K$ and let $N$ be an integer. 
@@ -618,7 +630,7 @@ Then $f_{u,r,s,t}$ from \cref{eq:weierstrass-isomorphism} defines an isomorphism
 		\item  a \textit{a point of order $\geq N$ on $E$} is an group homomorphism $\phi: \Z \to  E[N](K)$ whose image has cardinality $\geq N$. \label{def:point-of-order-geq-N-over-K}
 	\end{defenum}
 \end{definition}
-\begin{remark}
+\begin{remark}\label{rem:alternative-def-level-structure}
 Since $E[N](\overline K) \cong  (\Z/N\Z)^2$, \Cref{def:full-level-structure-over-K} is equivalent to giving $P,Q \in E[N](K)$ such that they together generate $E[N](\overline K)$. \Cref{def:point-of-order-N-over-K} is equivalent to giving a point $P \in E[N](K)$ of order $N$, and \cref{def:point-of-order-geq-N-over-K} is equivalent to giving a $P \in E[N](K)$ of order $\geq N$.
 \end{remark}
 
@@ -674,7 +686,7 @@ Note that elliptic families do not always admit a global Weierstrass model. Howe
 However before doing this we first need to
 
 \begin{definition}[Weierstrass model]\label{def:weierstrass-model-over-var}
-Let $S$ be a variety over a field $K$, and let $a := (a_1,a_2,a_3,a_4,a_6 )$ where $a_1,a_2,a_3,a_4,a_6 \in \Gamma(S,\mathcal O_S)$ be regular functions such that for all $s \in S(\overline K)$ one has $\Delta_{a}(s) \neq 0$ (or equivalently $\Delta_{a} \in \Gamma(S,\mathcal O_S)^*$ ) \todo{define $\Delta$}. Then the Weierstrass-Model with invariants $a:={a_1,a_2,a_3,a_4,a_6}$ is defined to be the triple $(E_{a},f,0)$ over $S$ where, \begin{itemize}[label=-]
+Let $S$ be a variety over a field $K$, and let $a := (a_1,a_2,a_3,a_4,a_6 )$ where $a_1,a_2,a_3,a_4,a_6 \in \Gamma(S,\mathcal O_S)$ be regular functions such that for all $s \in S(\overline K)$ one has $\Delta_{a}(s) \neq 0$ (or equivalently $\Delta_{a} \in \Gamma(S,\mathcal O_S)^*$ ). Then the Weierstrass-Model with invariants $a:={a_1,a_2,a_3,a_4,a_6}$ is defined to be the triple $(E_{a},f,0)$ over $S$ where, \begin{itemize}[label=-]
 	\item $E_{a} \subset \P^2_K \times S$ is the curve given by
 	$$y^2z+ a_1(s)xyz+a_3(s)yz^2=x^3+a_2(s)x^2z+a_4(s)xz^2+a_6(s)z^3.$$
 	\item The morphism $f:  E_{a} \to S$ is projection onto the second coordinate.
@@ -706,8 +718,43 @@ The triple $(E_{a_1,a_2,a_3,a_4,a_6},f,0)$ of \cref{def:weierstrass-model-over-v
 
 \subsubsection{Group law}
 
-\subsubsection{Level structure}
+\subsubsection{Level structures}
 
+It turns out that for defining level structures for families it is more convenient to work with the alternative way of defining level structures as in \Cref{rem:alternative-def-level-structure}.
+\begin{definition}[Level structures]\label{def:level-structures-over-var}
+	Let $S$ be a variety over a field $K$, let $E$ be a family of an elliptic curves over $S$ and let $N$ be an integer. 
+	\begin{defenum}
+		\item Assume $N$ is invertible in $K$, a \textit{full level $N$ structure on $E$} is a pair of points $P,Q \in E[N](S)$  such that for all $s \in S(\overline K)$ the points $P_s, Q_s$ generate $E_s[N](\overline K)$. \label{def:full-level-structure-over-var}
+		\item Assume $N$ is invertible in $K$,  a \textit{a point of order $N$ on $E$} is an element $P \in E[N](S)$ such that  for all $s \in S(\overline K)$ the point $P_s$ is of order $N$ in $E_s(\overline K)$.  \label{def:point-of-order-N-over-var}
+		\item  a \textit{a point of order $\geq N$ on $E$} is an element $P \in E(S)$ such that  for all $s \in S(\overline K)$ the point $P_s$ is of order $\geq N$ in $E_s(\overline K)$.\label{def:point-of-order-geq-N-over-var}
+	\end{defenum}
+\end{definition}
+
+\begin{definition}
+	\hspace{1em}\todo[inline]{define morphisms of families of elliptic curves with level structure (is this actually needed)}
+\end{definition}
+
+\subsubsection{Examples}
+
+\begin{example}[A family of elliptic curves with point of order $\geq 4$]
+	Let $K$ be a field. Let $b,c$ be coordinates on $\A^2$. Define $$\Delta(b,c) :=  \left(-1\right) \cdot b^{3} \cdot (c^{4} + 8 b c^{2} - 3 c^{3} + 16 b^{2} + 20 b c + 3 c^{2} - b - c) \in K[b,c].$$ Let $Y_{\geq }(4) \subset \A^2_K$ be the open subvariety where $\Delta(b,c) \neq 0$. Define $E_\geq(4) \subset \P^2_K \times Y_{\geq }(4)$ by $$E_{\geq}(4) : y^2z+(1-c)xyz-byz^2=x^3-bx^2z$$
+\begin{comment}
+R.<b,c> = QQ[]
+E = EllipticCurve(R.fraction_field()[1-c,b,b,0,0])
+E.discriminant().factor()
+\end{comment}
+Let $f : E_{\geq}(4) \to Y_{\geq}(4)$ be projection onto the second coordinate. Then \begin{align*}
+0: Y_{\geq}(4) &\to E_{\geq}(4) \\
+(b,c) &\mapsto ((0:1:0),(b,c))
+\end{align*}
+is a section of $f$, and the triple $(E,f,0)$ is a family of elliptic curves over $Y_{\geq}(4)$ as in \Cref{def:ec-over-var}. Futhermore
+\begin{align*}
+P_{\geq}(4): Y_{\geq}(4) &\to E_{\geq}(4) \\
+(b,c) &\mapsto ((0:0:1),(b,c))
+\end{align*}
+Is a point of order $\geq 4$ as in \Cref{def:point-of-order-geq-N-over-var}.
+
+\end{example}
 
 \subsection{Elliptic curves over $\C$}
 \begin{theorem}\label{stmt:complex-ec-is-C-mod-lattice}
@@ -781,9 +828,9 @@ is an inverse of $T'$.
 
 
 
-\section{A hint towards Shimura varieties}
+\subsection{A hint towards Shimura varieties}
 
-\subsection{The circle group}
+\subsubsection{The circle group}
 
 \begin{definition}
 	The \textit{circle group} is the group variety $\SS \subseteq \A^3_\R$ over $\R$ given by the equation $(a^2+b^2)t-1$. The identity element is given $(a,b,t)=(1,0,1)$ and the multiplication and inverse maps are given by
@@ -808,7 +855,89 @@ Show that $\phi$ is a group homomorphism.
 \end{exercise}
 
 
+\section{Moduli problems}
 
+\subsection{The Category $\Ell_K$ }
+
+\begin{definition}\label{def:category-ell} The category  \textit{$\Ell_K$} is defined to be the category where objects are families of elliptic curves $f : E  \to S$. Morphisms between $f_1 : E_1  \to S_1$ and $f_2 : E_2  \to S_2$ are pairs $(h,g)$ with $h : E_1 \to E_2$ and $g: S_1 \to S_2$ such that the square 
+	\[
+	\begin{tikzcd}
+	E_1 \arrow[r,"h"] \arrow[d,"f_1"] & E_2 \arrow[d, "f_2"] \\
+	S_1 \arrow[r, "g"'] & S_2,
+	\end{tikzcd}
+	\]  is cartesian as in \Cref{def:cartesian-square}.
+\end{definition}
+
+\begin{notation}
+We will often simply write $E/S$ for an object in $\Ell_K$, and understand that the regular map $f: E \to S$ is implicitly part of the data.
+\end{notation}
+
+\begin{exercise}
+Show that $\Ell_K$ actually is a category. For example to show that composition in this category is well defined one needs to show that if
+\[
+\begin{tabular}{cc}	
+\begin{tikzcd}
+E_1 \arrow[r,"h"] \arrow[d,"f_1"] & E_2 \arrow[d, "f_2"] \\
+S_1 \arrow[r, "g"'] & S_2,
+\end{tikzcd} and
+&
+\begin{tikzcd}
+E_2 \arrow[r,"h'"] \arrow[d,"f_2"] & E_3 \arrow[d, "f_3"] \\
+S_2 \arrow[r, "g'"'] & S_3,
+\end{tikzcd}
+\end{tabular}
+\]
+are cartesian squares, then 
+\[\begin{tikzcd}
+E_1 \arrow[r,"h' \circ h"] \arrow[d,"f_1"] & E_3 \arrow[d, "f_3"] \\
+S_1 \arrow[r, "g' \circ g"'] & S_3
+\end{tikzcd}
+\] is cartesian as well.
+\end{exercise}
+
+\subsection{Moduli problems}
+
+\begin{definition}
+A \textit{moduli problem of elliptic curves} is a contravariant functor $$\mathcal P: \Ell_K^{op} \to \Sets.$$
+\end{definition}
+
+The level structures from \Cref{def:level-structures-over-var} can be used to define the following moduli problems:
+\begin{definition}\label{def:several-moduli-problems}Let $K$ be a field and $N$ be an integer, then moduli problems $[\Gamma(N)]$, $[\Gamma_1(N)]$ and $[\Gamma_\geq(N)]$ are defined as follows; where $N$ is assumed to be invertible in $K$ for the definition of $[\Gamma(N)]$ and $[\Gamma_1(N)]$:
+	\begin{align*}
+	[\Gamma(N)] : \Ell_K &\to \Sets \\
+	  E/S &\mapsto \set{ P,Q \in E(S) \mid P,Q \text{ define a full level structure on } E}\\
+	  	[\Gamma_1(N)] : \Ell_K &\to \Sets \\
+	  E/S &\mapsto \set{ P \in E(S) \mid P \text{ a point of order } N}\\
+	  	[\Gamma_\geq (N)] : \Ell_K &\to \Sets \\
+	  E/S &\mapsto \set{ P \in E(S) \mid P \text{ a point of order } \geq N}\\
+	\end{align*}
+\end{definition}
+
+\begin{exercise}
+In \Cref{def:several-moduli-problems} the functors $[\Gamma(N)]$, $[\Gamma_1(N)]$ and $[\Gamma_\geq(N)]$ were only defined on sets, and not on homomorphisms.  The goal of this exercise is to also describe what the functors do on morphisms.
+\begin{enumerate}
+\item Suppose $(h,g): E_1/S_1 \to E_2/S_2$ is a morphism in $\Ell_K$, i.e. there is a cartesian diagram of the shape:
+	\[
+\begin{tikzcd}
+E_1 \arrow[r,"h"] \arrow[d,"f_1"] & E_2 \arrow[d, "f_2"] \\
+S_1 \arrow[r, "g"'] & S_2,
+\end{tikzcd}
+\]
+Let $P \in E_2(S_2)$, use the universal property of the fiber product to show that there is a unique point $P'$ fitting in to the commutative diagram
+	\[
+\begin{tikzcd}
+E_1 \arrow[r,"h"] \arrow[d,"f_1"] & E_2 \arrow[d, "f_2"] \\
+S_1  \arrow[u, bend left,"P'"] \arrow[r, "g"'] & S_2 \arrow[u, bend left, "P"], \label{def:pullback-point-on-ec}
+\end{tikzcd}
+\]
+\item For $(h,g): E_1/S_1 \to E_2/S_2$  and $P\in E(S)$ define  $(h,g)^*(P) := P'$ where $P'$ is the point from (\ref{def:pullback-point-on-ec}). And view $(h,g)^*$ as a map $E_2(S_2) \to E_1(S_1)$. Define 
+\begin{align*}
+[\Gamma(N)](h,g) : [\Gamma(N)](E_2,S_2) &\to [\Gamma(N)](E_1,S_1) \\
+ (P,Q) &\mapsto ((h,g)^*(P),(h,g)^*(Q) )
+\end{align*}
+Show that $[\Gamma(N)](h,g)$ is a well defined map of sets, that turns $[\Gamma(N)]$ into a functor. Similarly for $[\Gamma_1(N)]$ and $[\Gamma_\geq(N)]$.
+\end{enumerate}
+\end{exercise}
 
 \listoftodos
 
