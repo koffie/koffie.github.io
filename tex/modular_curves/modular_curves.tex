@@ -487,7 +487,7 @@ Note that often when talking about elliptic curves, the element $0 \in E(K)$ is 
 The above definition is quite abstract. However, sometimes it is easier to work with explicit equations for elliptic curves. The goal of this subsection is to show that every elliptic curve over a field can be given by a Weierstrass model.
 
 \begin{definition}[Weierstrass model]\label{def:weierstrass-model-over-K}
-Let $a := (a_1,a_2,a_3,a_4,a_6) \in K^5$ then define $E_{A} \subset \P^2$ to be the curve given by
+Let $a := (a_1,a_2,a_3,a_4,a_6) \in K^5$ then define $E_{a} \subset \P^2$ to be the curve given by
 $$y^2z+ a_1xyz+a_3yz^2=x^3+a_2x^2z+a_4xz^2+a_6z^3.$$
 The point $0$ on $E$ is defined the point where $(x:y:z) = (0:1:0)$.
 \end{definition}
@@ -496,7 +496,7 @@ The point $0$ on $E$ is defined the point where $(x:y:z) = (0:1:0)$.
 
 Note there is no $a_5$ in the above definition. This is on purpose and will become clear later.
 Before we continue we need to define a quantity called the discriminant.
-\begin{definition}[Discriminant]
+\begin{definition}[Discriminant]\label{def:weierstrass-discriminant}
 The $b$-invariants $b_2,b_4,b_6,b_8 \in \Z[a_1,a_2,a_3,a_4,a_6]$ and the \text{discriminant} $\Delta \in \Z[a_1,a_2,a_3,a_4,a_6]$ are defined as follows:
 \begin{align*}
 b_2 &= a_1^2 + 4 a_2 \\
@@ -619,6 +619,55 @@ Then $f_{u,r,s,t}$ from \cref{eq:weierstrass-isomorphism} defines an isomorphism
 	\todo[inline]{add reference  to silverman  and say that we use an inverse convention}
 \end{proof}
 \subsubsection{Group law}
+
+\subsubsection{Division Polynomials}
+\hspace{1em}\todo[inline]{cite A. Enge. Elliptic curves and their applications to cryptography — an introduction. Kluwer, 199 and Jinbi Jin \url{https://arxiv.org/pdf/1303.4327}}
+
+Let $\mathcal W := y^2+ a_1xy+a_3y-(x^3+a_2x^2+a_4x+a_6) \in \Z[a_1,a_2,a_3,a_4,a_6,x,y]$ be the inhomogenous version of the equation defining the Weirestrass Model from  \Cref{def:weierstrass-model-over-K} obtained by setting $z=1$.
+
+\begin{definition}
+The \textit{division polynomials} $\Psi_n \in \Z[a_1,a_2,a_3,a_4,a_6,x,y]/\mathcal W$ are the polynomials satisfying  the recurrence relation:
+\[\Psi_{m+2}\Psi_{m-2}=\Psi_2^2\Psi_{m+1}\Psi_{m-1}-\Psi_m^2\Psi_{3}\]
+and the initial conditions
+\begin{align*}
+\Psi_0 & := 0 \\
+\Psi_1 & := 1 \\
+\Psi_2 & := 2y+a_1x+a_3 \\
+\Psi_3 & := 3x^4+b_2x^3+3b_4x^2+3b_6x+b_8 \\
+\Psi_4 & := \Psi_2(2x^6+b_2x^5+5b_4x^4+10b_6x^3+10b_8x^2+(b_2b_8-b_4b_6)x + b_4b_8-b_6^2),
+\end{align*}
+where the $b_i$ are as in \Cref{def:weierstrass-discriminant}.
+\end{definition}
+
+These polynomials can be viewed as elements in $\Z[a_1,a_2,a_3,a_4,a_6,x,y]$ by taking the unique representative where the degree of the occurrences of  $y$ in $\Psi_{m-n}$ is at most $1$.
+
+\begin{proposition}
+The division polynomials satisfy the relation \[\Psi_{m+n}\Psi_{m-n}=\Psi_n^2\Psi_{m+1}\Psi_{m-1}-\Psi_m^2\Psi_{n+1}\Psi_{n-1}\]
+\end{proposition}
+\begin{proof}
+\todo[inline]{cite enge/jinbi jin}
+\end{proof}
+
+\begin{definition}The \textit{auxiliary division polynomials} are the polynomials $\Phi_n,\Omega_n \in \Z[a_1,a_2,a_3,a_4,a_6,x,y]/\mathcal W$ for integer values of $n$ are defined by
+	\begin{align*}
+	   \Phi_n & := X\Psi_n^2-\Psi_{n+1}\Psi_{n-1} \\
+	   \Omega_0 & := 1 \\
+	   \Omega_n & := \frac{1}{2\Psi_n}(\Psi_{2n}-\Psi^2_n(a_1\Phi_n+a_3\Psi_n^2)) \text{ if } n\neq 0
+	\end{align*}
+\end{definition}
+
+\begin{proposition}\label{stmt:ec-over-k-multiplication-using-division-polynomials}
+Let $K$ be a field, $a := a_1,a_2,a_3,a_4,a_6 \in K^5$ such that $\Delta_a \neq 0$ and $P := (x:y:1)$ be a point on the Weierstrass curve $E_a$. Then for all integers $n$ the point $nP$ has coordinates 
+$$nP = (\Psi_n(a,x,y)\Phi_n(x,y):\Omega_n(a,x,y): \Psi_n^3(a,x,y))$$
+\end{proposition}
+\begin{proof}
+	\todo[inline]{cite enge/jinbi jin}
+\end{proof}
+
+\begin{corollary}
+The order of $P$ is a divisor of $n$ if and only if $\Psi_n(a,x,y)=0$.
+\end{corollary}
+
 
 \subsubsection{Level structures}
 
