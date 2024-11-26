@@ -144,6 +144,8 @@
 \DeclareMathOperator{\BadFormalImmersion}{\textup{\textsf{BadFormalImmersion}}}
 \DeclareMathOperator{\AGFI}{\textup{\textsf{AGFI}}}
 \DeclareMathOperator{\Ell}{Ell}
+\DeclareMathOperator{\Obj}{Obj}
+\DeclareMathOperator{\Mor}{Mor}
 
 \newcommand{\Cusp}{\Div^{c}}
 \newcommand{\Cuspo}{\Div^{0,c}}
@@ -471,6 +473,67 @@ To show it is surjective, let $G(s_1,s_2) \in G\backslash(S_1 \times S_2)$ be an
 For injectivity let $s_1, s_1' \in S$ and $s_2, s_2' \in C$. If  $\stab{G}{s_2}s_1$ and $\stab{G}{s'_2}s'_1$ map to the same element in $G\backslash(S_1 \times S_2)$ then $s_2$ and $s'_2$ must by in the same $G$ orbit. However since $C$ consists of representatives of $G \backslash S_2$ this forces $s_2 = s_2'$. Since we have $s_2=s_2'$ the equality $G(s_1,s_2) = G(s_1',s_2')$ is equivalent to $s'_1=gs_1$ for some $g \in \stab{G}{s_2}$ showing that $\stab{G}{s_2}s_1=\stab{G}{s'_2}s'_1$.
 \end{proof}
 
+\subsection{Representability of functors}
+
+
+\begin{definition}
+A category $\mathcal C$ is \textit{locally small} if for all $A,B \in \Obj(\mathcal C)$ the homomorphism $\Hom(A,B)$ form a set.
+\end{definition}
+
+
+\begin{definition}\label{def:hom-functor}
+Let $\mathcal C$ be a locally small category and $A$ an object in  $\mathcal C$ then $h^A$  and $h_A$ are defined by
+\begin{align*}
+h_A : \Obj(\mathcal C) &\to \Sets \\
+B &\mapsto Hom(A,B)  \\
+h_A : \Hom(B,C)  & \mapsto \Hom_{\Sets}(h_A(B),h_A(C)) \\
+f &\mapsto (g \mapsto f \circ g) \\
+h^A : \Obj(\mathcal C) &\to \Sets \\
+         B &\mapsto Hom(B,A)  \\
+h^A : \Hom(B,C)  & \mapsto \Hom_{\Sets}(h^A(C),h^A(B)) \\
+             f &\mapsto (g \mapsto  g \circ f)
+\end{align*}
+
+\end{definition}
+In the definition for $h^A$ above one has $g \in h^A(C) :=\Hom(C,A)$ to that $g \circ f \in h^A(B) :=\Hom(B,A)$, and similarly for $h_A$.
+
+\begin{proposition}
+The maps $h_A$ and $h^A$ from \Cref{def:hom-functor} are a covariant and a contravariant funtor respectively. 
+\end{proposition}
+\begin{proof}
+We need to show that $h_A$ and $h^A$ respect composition. For this end let $B,C,D \in \Obj(\mathcal C)$, $f_1 \in \Hom(B,C)$ and $f_2 \in \Hom(C,D)$ then 
+$$h_A(f_2) \circ h_A(f_1) = (g \mapsto f_2 \circ f_1 \circ g) = h_A(f_2 \circ f_1).$$ 
+The proof for $h^A$ is similar.
+\end{proof}
+
+\begin{definition}\label{def:representable-functor}
+Let $\mathcal C$ be a locally small category. A functor $F: \mathcal C \to \Sets$ is called \textit{representable} if there exists and $A \in \Obj(C)$ and a natural isomorphism $\eta: h^A \to F$.  Similarly, a contra-variant functor $F: \mathcal C ^{op} \to \Sets$ is called \textit{representable} if there exists and $A \in \Obj(C)$ and a natural isomorphism $\eta: h_A \to F$.  
+\end{definition}
+
+
+\begin{remark}\label{rem:universal-element-defines-natural-transformation}
+If a contra-variant functor $F: \mathcal C ^{op} \to \Sets$ is representable by $A$ with a corresponding natural isomorphism $\eta: h^A \to F$, then one can define  $t := \eta_A(\id_A) \in F(A)$. Note that $t$ and $F$ uniquely determine $\eta_B: h^A(B) \to F(B)$ for all $B \in \Obj(\mathcal C)$. Indeed if $f \in h^A(B)$, then $f = \id_A \circ f= h:A(f) (\id_A)$. Because $\eta$ is a natural transformation there is the following commutative diagram.
+
+
+\[
+\begin{tikzcd}
+h^A(A) \arrow[d, "h^A(f)"'] \arrow[r, "\eta_A"] & F(A) \arrow[d, "F(f)"] \\
+h^A(B) \arrow[r, "\eta_B"'] & F(B).
+\end{tikzcd}
+\]
+
+In particular: \begin{align}\eta_B(f) =  \eta_B(h^A(f) (\id_A))=F(f)\eta_A(\id))=F(f)(t).\label{eq:universal-natural-transformation}\end{align}
+So that we have expressed $\eta$ entirely in terms of $F$ and $t$. Of course there is an equivalent remark for covariant functors.
+\end{remark}
+
+\begin{definition}\label{def:universal-pair}
+	Let $F: \mathcal C \to \Sets$ be a representable contra-variant functor, $A$ the object representing $F$ and $\eta: h^A \to F$ is the corresponding natural transformation. Then $t := \eta_A(\id_A) \in F(A)$  is called the \textit{universal element} over $A$, and the pair $(A,t)$ the \textit{universal pair} representing the functor $F$. The universal element $t$ is defined in exactly the same way if $F$ is co-variant.
+\end{definition}
+
+\begin{remark}
+When proving that a certain (contra-variant) functor $F$ is representable, one strategy is try to find out what the corresponding universal pair $(A,t)$ should be. After having found the universal pair $(A,t)$ representably can be established by proving that $\eta$ given by the formula \cref{eq:universal-natural-transformation} defines a natural isomorphism of functors $\eta: H_A \to F$ or $\eta: H^A \to F$ depending on whether $F$ was co- or contra-variant.
+\end{remark}
+
 \subsection{Adeles}
 
 \section{Elliptic curves}
@@ -501,7 +564,7 @@ The $b$-invariants $b_2,b_4,b_6,b_8 \in \Z[a_1,a_2,a_3,a_4,a_6]$ and the \text{d
 \begin{align*}
 b_2 &= a_1^2 + 4 a_2 \\
 b_4 &= 2a_4 + a_1 a_3 \\
-b_6 &= a_3^2 + 4 a_6 \\
+b_6 &=  4 a_6 +a_3^2 \\
 b_8 &= a_1^2 a_6 + 4a_2 a_6 - a_1 a_3 a_4 + a_2 a_3^2 - a_4^2 \\
 \Delta &= -b_2^2 b_8 - 8b_4^3 - 27b_6^2 + 9b_2 b_4 b_6.
 \end{align*}
@@ -988,6 +1051,9 @@ Show that $[\Gamma(N)](h,g)$ is a well defined map of sets, that turns $[\Gamma(
 \end{enumerate}
 \end{exercise}
 
+\begin{definition}
+
+\end{definition}
 \listoftodos
 
 \bibliographystyle{alpha}
