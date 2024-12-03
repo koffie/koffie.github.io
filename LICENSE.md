@@ -1,6 +1,6 @@
 The main license for this work is the CC BY-NC-SA 4.0 license listed
 below. However, as this is an agregate work, some parts have been 
-licensed under other licenses see README.md for details on which parts
+licensed under other license. See README.md for details on which parts
 are released under a different license.
 
 Attribution-NonCommercial-ShareAlike 4.0 International
