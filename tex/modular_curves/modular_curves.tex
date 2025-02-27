@@ -205,6 +205,7 @@ These are lecture notes for a course on modular curves given in Zagreb. The lang
 
 \section{Background}
 
+
 \subsection{Notations}
 
 \begin{itemize}
@@ -221,7 +222,7 @@ These are lecture notes for a course on modular curves given in Zagreb. The lang
 
 \hspace{1em}\todo[inline]{say something about varieties over non algebraically closed fields as in section 1 of Silverman}
 
-\subsubsection{Families of varieties.}
+\subsection{Families of varieties.}
 \begin{definition}[Family of varieties.]\label{def:family-of-varieties}
 Let $S$ by a variety over a field $K$. A \textit{family of varieties over $S$} is a pair $(X,f)$ where 
 \begin{defenum}
@@ -247,6 +248,42 @@ Let $S$ by a variety over a field $K$ and $(X_1,f_1), (X_2,f_2)$ be two families
 \end{definition}
 
 Let $s \in  S(\overline K)$ and let $h_s : X_{1,s} \to X_{2,s}$  denote the restriction of $h$ to the fibers above $s$. It follows from \Cref{def:family-of-varieties-morphism} that $h_s$ is a regular map between varieties over $\overline K$. Note that if $s$ lies in some field $L \subset \overline K$ and $K \subset L$ then $h_s$ is actually defined over $L.$
+
+\subsubsection{Smooth families}\label{sec:smooth-families}
+\Cref{sec:smooth-families} is derived from material form the \href{https://stacks.math.columbia.edu/}{Stacks project} maintained by Aise Johan de Jong. As such this section is licensed under the GFDL license, the same license as the stacks project. The material from the Stacks project has been significantly changed and the author of these lecture notes takes full responsibility for any mistakes.
+
+\begin{definition}
+	\label{definition-standard-smooth}
+	Let $k$ be a field, $S \subset \A^m_k$ be an affine variety with coordinate ring $R$. Given integers $n \geq c \geq 0$ and
+	$f_1, \ldots, f_c \in R[x_1, \ldots, x_n]$ we can see the $f_i$ as regular functions $X \subset S \times \A_n$. We say that the variety $X \subset S \times \A_n$ given with coordinate ri
+	$$
+	S = R[x_1, \ldots, x_n]/(f_1, \ldots, f_c)
+	$$
+	is a {\it standard smooth algebra over $R$} if the polynomial
+	$$
+	g =
+	\det
+	\left(
+	\begin{matrix}
+	\partial f_1/\partial x_1 &
+	\partial f_2/\partial x_1 &
+	\ldots &
+	\partial f_c/\partial x_1 \\
+	\partial f_1/\partial x_2 &
+	\partial f_2/\partial x_2 &
+	\ldots &
+	\partial f_c/\partial x_2 \\
+	\ldots & \ldots & \ldots & \ldots \\
+	\partial f_1/\partial x_c &
+	\partial f_2/\partial x_c &
+	\ldots &
+	\partial f_c/\partial x_c
+	\end{matrix}
+	\right)
+	$$
+	maps to an invertible element in $S$.
+\end{definition}
+
 
 \begin{notation}
 	Let $(T,f_1), (X,f_2)$ be two families of varieties over $S$, then $X(T)$ is shorthand notation for the set of morphisms as in \Cref{def:family-of-varieties-morphism}. Similarly $X(S)$ is shorthand notation where $(T,f_1) = (S, \id_S)$. 
@@ -507,7 +544,7 @@ The proof for $h^A$ is similar.
 \end{proof}
 
 \begin{definition}\label{def:representable-functor}
-Let $\mathcal C$ be a locally small category. A functor $F: \mathcal C \to \Sets$ is called \textit{representable} if there exists and $A \in \Obj(C)$ and a natural isomorphism $\eta: h^A \to F$.  Similarly, a contra-variant functor $F: \mathcal C ^{op} \to \Sets$ is called \textit{representable} if there exists and $A \in \Obj(C)$ and a natural isomorphism $\eta: h_A \to F$.  
+Let $\mathcal C$ be a locally small category. A functor $F: \mathcal C \to \Sets$ is called \textit{representable} if there exists and $A \in \Obj(C)$ and a natural isomorphism of functors $\eta: h^A \to F$.  Similarly, a contra-variant functor $F: \mathcal C ^{op} \to \Sets$ is called \textit{representable} if there exists and $A \in \Obj(C)$ and a natural isomorphism $\eta: h_A \to F$.  
 \end{definition}
 
 
@@ -848,7 +885,7 @@ It turns out that for defining level structures for families it is more convenie
 
 \subsubsection{Examples}
 
-\begin{example}[A family of elliptic curves with point of order $\geq 4$]
+\begin{example}[A family of elliptic curves with point of order $\geq 4$]\label{ex:y_geq_4}
 	Let $K$ be a field. Let $b,c$ be coordinates on $\A^2$. Define $$\Delta(b,c) :=  \left(-1\right) \cdot b^{3} \cdot (c^{4} + 8 b c^{2} - 3 c^{3} + 16 b^{2} + 20 b c + 3 c^{2} - b - c) \in K[b,c].$$ Let $Y_{\geq }(4) \subset \A^2_K$ be the open subvariety where $\Delta(b,c) \neq 0$. Define $E_\geq(4) \subset \P^2_K \times Y_{\geq }(4)$ by $$E_{\geq}(4) : y^2z+(1-c)xyz-byz^2=x^3-bx^2z$$
 \begin{comment}
 R.<b,c> = QQ[]
@@ -1051,9 +1088,16 @@ Show that $[\Gamma(N)](h,g)$ is a well defined map of sets, that turns $[\Gamma(
 \end{enumerate}
 \end{exercise}
 
-\begin{definition}
 
+\begin{definition}\label{def:representable-moduli-problem}
+	A moduli problem $\mathcal P$ on $\Ell_K$ is called {\it representable} if it is representable as a contravariant functor in the sense of \Cref{def:representable-functor}.
 \end{definition}
+
+In other words $\mathcal P$ is representable  if and only if  there exists and object $E_{\mathcal P}/Y_{\mathcal P} \in \Ell_K$ and a natural isomorphism of functors $\eta: h^{E_{\mathcal P}/Y_{\mathcal P}} \to \mathcal P$. As in \Cref{def:universal-pair} we can define $t_{\mathcal P} := \eta(\id_{E_{\mathcal P}/Y_{\mathcal P}}) \in \mathcal P (E_{\mathcal P}/Y_{\mathcal P}) $. Recall from  \Cref{def:universal-pair} that $(E_{\mathcal P}/Y_{\mathcal P},t_{\mathcal P})$ is called the universal pair representing $\mathcal P$. In the context of moduli problems there are at least two different terminologies that are used to refer to this universal pair.
+\begin{definition}\label{def:moduli-problem-solution}
+	The pair $(E_{\mathcal P}/Y_{\mathcal P},,t_{\mathcal P})$ is either called \textit{a solution to the moduli problem $\mathcal P$} and it is sometimes also called the \textit{universal elliptic curve with level structure representing the moduli problem $\mathcal P$}.  
+\end{definition}
+
 \listoftodos
 
 \bibliographystyle{alpha}
